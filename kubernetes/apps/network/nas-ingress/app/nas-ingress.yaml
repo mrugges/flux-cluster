@@ -1,8 +1,13 @@
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+
 metadata:
   name: nas
+  annotations:
+    hajimari.io/enable: true
+    hajimari.io/appName: NAS
+    hajimari.io/icon: nas
 spec:
   ingressClassName: internal
   rules:
