@@ -1,0 +1,8 @@
+---
+kubernetes:
+  children:
+    master:
+      hosts:
+        k3s-one:
+          ansible_user: ulver
+          ansible_host: 10.10.96.2
