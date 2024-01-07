@@ -7,7 +7,6 @@ metadata:
 spec:
   ingressClassName: internal
   annotations:
-    hajimari.io/enable: true
     hajimari.io/appName: NAS
     hajimari.io/icon: mdi:nas
   rules:

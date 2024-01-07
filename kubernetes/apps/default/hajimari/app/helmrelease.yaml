@@ -39,6 +39,7 @@ spec:
         matchNames:
           - default
           - observability
+          - network
     ingress:
       main:
         enabled: true
