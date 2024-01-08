@@ -44,12 +44,6 @@ spec:
               limits:
                 memory: 32G
                 cpu: 6304m
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-
-
     service:
       main:
         ports:
