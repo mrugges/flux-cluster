@@ -74,6 +74,8 @@ spec:
               - path: /
                 service:
                   name: main
+                  port:
+                    number: 2456
         tls:
           - hosts:
               - *host
