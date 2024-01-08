@@ -75,7 +75,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
         hosts:
-          - host: &host "valheim.${INTERNAL_DOMAIN}"
+          - host: &host "valheim.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
