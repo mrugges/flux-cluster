@@ -4,11 +4,10 @@ kind: Ingress
 
 metadata:
   name: nas
+  annotations:
+    hajimari.io/icon: mdi:nas
 spec:
   ingressClassName: internal
-  annotations:
-    hajimari.io/appName: NAS
-    hajimari.io/icon: mdi:nas
   rules:
     - host: &host nas.${SECRET_DOMAIN}
       http:
