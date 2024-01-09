@@ -4,11 +4,11 @@ kind: Ingress
 metadata:
   name: radarr
   annotations:
-    hajimari.io/icon: arcticons:qbittorrent-remote
+    hajimari.io/icon: material-symbols:radar
 spec:
   ingressClassName: internal
   rules:
-    - host: &host qb.${SECRET_DOMAIN}
+    - host: &host radarr.${SECRET_DOMAIN}
       http:
         paths:
           - pathType: Prefix
