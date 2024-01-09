@@ -6,3 +6,4 @@ resources:
   - ./qb-ingress.yaml
   - ./radarr-ingress.yaml
   - ./lidarr-ingress.yaml
+  - ./prowlarr-ingress.yaml

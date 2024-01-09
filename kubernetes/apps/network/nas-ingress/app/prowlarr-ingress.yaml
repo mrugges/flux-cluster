@@ -1,0 +1,45 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prowlarr
+  annotations:
+    hajimari.io/icon: mdi:cat
+spec:
+  ingressClassName: internal
+  rules:
+    - host: &host prowlarr.${SECRET_DOMAIN}
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: prowlarr
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - *host
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: prowlarr
+subsets:
+  - addresses:
+      - ip: ${NAS_IP}
+    ports:
+      - name: http
+        port: 9696
+        protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prowlarr
+spec:
+  ports:
+    - name: http
+      port: 80
+  type: ClusterIP
