@@ -5,6 +5,7 @@ metadata:
   name: nasport
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    hajimari.io/icon:simple-icons:portainer
 spec:
   ingressClassName: internal
   rules:
