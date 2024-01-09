@@ -5,3 +5,4 @@ resources:
   - ./nasport-ingress.yaml
   - ./qb-ingress.yaml
   - ./radarr-ingress.yaml
+  - ./lidarr-ingress.yaml
