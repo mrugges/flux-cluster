@@ -4,3 +4,4 @@ resources:
   - ./nas-ingress.yaml
   - ./nasport-ingress.yaml
   - ./qb-ingress.yaml
+  - ./radarr-ingress.yaml
