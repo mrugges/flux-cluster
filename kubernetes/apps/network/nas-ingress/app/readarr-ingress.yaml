@@ -1,0 +1,45 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: readarr
+  annotations:
+    hajimari.io/icon: bi:book
+spec:
+  ingressClassName: internal
+  rules:
+    - host: &host readarr.${SECRET_DOMAIN}
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: readarr
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - *host
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: readarr
+subsets:
+  - addresses:
+      - ip: ${NAS_IP}
+    ports:
+      - name: http
+        port: 8787
+        protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: readarr
+spec:
+  ports:
+    - name: http
+      port: 80
+  type: ClusterIP
