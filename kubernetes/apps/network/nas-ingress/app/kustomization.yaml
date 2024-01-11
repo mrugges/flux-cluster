@@ -8,3 +8,4 @@ resources:
   - ./lidarr-ingress.yaml
   - ./prowlarr-ingress.yaml
   - ./readarr-ingress.yaml
+  - ./sonarr-ingress.yaml
