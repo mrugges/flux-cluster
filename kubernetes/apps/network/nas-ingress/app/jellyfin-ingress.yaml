@@ -31,7 +31,7 @@ subsets:
       - ip: ${NAS_IP}
     ports:
       - name: http
-        port: 8085
+        port: 8096
         protocol: TCP
 ---
 apiVersion: v1
