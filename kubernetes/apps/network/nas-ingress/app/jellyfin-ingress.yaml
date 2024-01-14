@@ -1,0 +1,45 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jellyfin
+  annotations:
+    hajimari.io/icon: simple-icons:jellyfin
+spec:
+  ingressClassName: internal
+  rules:
+    - host: &host jellyfin.${SECRET_DOMAIN}
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: jellyfin
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - *host
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: jellyfin
+subsets:
+  - addresses:
+      - ip: ${NAS_IP}
+    ports:
+      - name: http
+        port: 8085
+        protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jellyfin
+spec:
+  ports:
+    - name: http
+      port: 80
+  type: ClusterIP

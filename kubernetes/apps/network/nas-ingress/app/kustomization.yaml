@@ -9,3 +9,4 @@ resources:
   - ./prowlarr-ingress.yaml
   - ./readarr-ingress.yaml
   - ./sonarr-ingress.yaml
+  - ./jellyfin-ingress.yaml
