@@ -10,3 +10,4 @@ resources:
   - ./readarr-ingress.yaml
   - ./sonarr-ingress.yaml
   - ./jellyfin-ingress.yaml
+  - ./audiobookshelf-ingress.yaml
