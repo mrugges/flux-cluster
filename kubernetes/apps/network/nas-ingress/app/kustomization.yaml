@@ -11,3 +11,4 @@ resources:
   - ./sonarr-ingress.yaml
   - ./jellyfin-ingress.yaml
   - ./audiobookshelf-ingress.yaml
+  - ./duplicati-ingress.yaml
