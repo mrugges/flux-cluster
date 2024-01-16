@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: videos-nfs
+spec:
+  capacity:
+    storage: 1Mi # Size does not matter
+  accessModes: ["ReadWriteMany"]
+  storageClassName: videos-nfs
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ${NAS_IP}
+    path: /volume1/Videos
+  # Note: The first two options are strictly for NFSv4.2
+  mountOptions: ["nfsvers=4.2", "nconnect=8", "hard", "noatime"]
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: videos-nfs
+  namespace: media
+spec:
+  accessModes: ["ReadWriteMany"]
+  storageClassName: videos-nfs
+  resources:
+    requests:
+      storage: 1Mi # Size does not matter
