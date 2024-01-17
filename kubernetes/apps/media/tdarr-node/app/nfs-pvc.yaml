@@ -13,7 +13,8 @@ spec:
     server: ${NAS_IP}
     path: /Videos
   # Note: The first two options are strictly for NFSv4.2
-  mountOptions: ["nfsvers=4.2", "nconnect=8", "hard", "noatime"]
+  # "nfsvers=4.2", "nconnect=8",
+  mountOptions: [ "hard", "noatime"]
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
