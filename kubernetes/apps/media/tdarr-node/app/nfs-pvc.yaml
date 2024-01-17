@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${NAS_IP}
-    path: /volume1/Videos
+    path: /volume1/Video
   # Note: The first two options are strictly for NFSv4.2
   # "nfsvers=4.2", "nconnect=8",
   mountOptions: ["hard", "noatime"]
