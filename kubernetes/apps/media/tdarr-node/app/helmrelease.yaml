@@ -53,10 +53,10 @@ spec:
         enabled: true
         existingClaim: videos-nfs
         subPath:
-        - path: media
-          mountPath: /mnt/media
-        - path: temp
-          mountPath: /temp
+        - path: movies
+          mountPath: /mnt/movies
+        - path: tv
+          mountPath: /mnt/tv
     podSecurityContext:
       runAsUser: 0
       runAsGroup: 0
