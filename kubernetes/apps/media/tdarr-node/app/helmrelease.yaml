@@ -52,10 +52,12 @@ spec:
       temp:
         enabled: true
         existingClaim: tdarr-temp-claim
-      media:
+      volume1:
         enabled: true
         existingClaim: videos-nfs
-        mountPath: /volume1/Video
+        subPath:
+        - path: movies
+          mountPath: /Video/movies
     podSecurityContext:
       runAsUser: 0
       runAsGroup: 0
