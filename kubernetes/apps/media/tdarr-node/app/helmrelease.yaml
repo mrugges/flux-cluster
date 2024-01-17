@@ -72,5 +72,3 @@ spec:
       requests:
         cpu: 150m
         memory: 3500M
-    nodeSelector:
-      node-role.kubernetes.io/worker: "true"
