@@ -49,10 +49,6 @@ spec:
           http:
             port: 8265
     persistence:
-      temp:
-        enabled: true
-        existingClaim: tdarr-temp-claim
-        mountPath: /temp
       media:
         enabled: true
         existingClaim: videos-nfs
