@@ -11,6 +11,14 @@ spec:
   storageClassName: local-hostpath
   local:
     path: /tdarr-temp
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - k3s-one
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -23,3 +31,4 @@ spec:
   resources:
     requests:
       storage: 500Gi
+
