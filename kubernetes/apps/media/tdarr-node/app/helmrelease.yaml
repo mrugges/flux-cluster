@@ -36,7 +36,7 @@ spec:
       PGID: "1000"
       serverIP: ${NAS_IP}
       serverPort: 8266
-      ffmpegPath: "/usr/bin/ffmpeg"
+      ffmpegPath: "/usr/local/bin/ffmpeg"
       nodeName:
         valueFrom:
           fieldRef:
