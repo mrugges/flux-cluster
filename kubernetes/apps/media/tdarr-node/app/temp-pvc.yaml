@@ -11,9 +11,7 @@ spec:
   storageClassName: local-hostpath
   local:
     path: /tdarr-temp
-
---
-
+---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
