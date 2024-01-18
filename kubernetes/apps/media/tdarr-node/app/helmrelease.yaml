@@ -34,7 +34,7 @@ spec:
       TZ: ${TIMEZONE}
       PUID: "1000"
       PGID: "1000"
-      serverIP: ${NAS_IP}
+      serverIP: 10.10.96.80
       serverPort: 8266
       ffmpegPath: "/usr/local/bin/ffmpeg"
       nodeName:
@@ -50,7 +50,7 @@ spec:
             port: 8265
     persistence:
       media:
-        enabled: false
+        enabled: true
         existingClaim: videos-nfs
         mountPath: /media
     podSecurityContext:
