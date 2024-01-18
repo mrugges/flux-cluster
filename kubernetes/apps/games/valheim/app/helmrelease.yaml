@@ -63,9 +63,7 @@ spec:
     service:
       main:
         type: LoadBalancer
-        externalTrafficPolicy: Cluster
-        annotations:
-          io.cilium/lb-ipam-ips: "${SECRET_LB_VALHEIM_ADDR}"
+        externalTrafficPolicy: Local
         ports:
           steam1:
             port: 2456
