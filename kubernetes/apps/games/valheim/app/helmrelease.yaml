@@ -85,7 +85,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx-external"
+        ingressClassName: nginx
         hosts:
           - host: &host "vh.${SECRET_DOMAIN}"
             paths:
