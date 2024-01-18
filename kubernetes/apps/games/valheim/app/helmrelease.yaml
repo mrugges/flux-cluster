@@ -46,36 +46,35 @@ spec:
                 cpu: 6304m
     service:
       main:
+        type: LoadBalancer
+        externalTrafficPolicy: Cluster
+        annotations:
+          io.cilium/lb-ipam-ips: "${SECRET_LB_VALHEIM_ADDR}"
         ports:
-          http:
-            port: 80
           steam1:
             port: 2456
             protocol: UDP
+            targetPort: 2456
           steam2:
             port: 2457
             protocol: UDP
+            targetPort: 2456
           steam3:
             port: 2458
             protocol: UDP
+            targetPort: 2456
           supervisor:
             port: 9001
             protocol: TCP
-
     ingress:
       main:
         enabled: true
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+        className: nginx
         hosts:
-          - host: &host "{{ .Release.Name  }}.${SECRET_DOMAIN}"
+          - host: &host "vh.${SECRET_DOMAIN}"
             paths:
               - path: /
-                service:
-                  name: main
-                  port:
-                    number: 2456
+                pathType: Prefix
         tls:
           - hosts:
               - *host
