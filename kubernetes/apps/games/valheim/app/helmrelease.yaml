@@ -92,6 +92,8 @@ spec:
           - host: &host "vh.${SECRET_DOMAIN}"
             paths:
               - path: /
+                service:
+                  name: main
         tls:
           - hosts:
               - *host
