@@ -86,8 +86,6 @@ spec:
       main:
         enabled: true
         ingressClassName: "nginx-external"
-        annotations:
-          cert-manager.io/cluster-issuer: letsencrypt-production
         hosts:
           - host: &host "vh.${SECRET_DOMAIN}"
             paths:
