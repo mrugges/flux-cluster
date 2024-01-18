@@ -67,6 +67,8 @@ spec:
         annotations:
           io.cilium/lb-ipam-ips: "${SECRET_LB_VALHEIM_ADDR}"
         ports:
+          http:
+            port: 80
           steam1:
             port: 2456
             protocol: UDP
