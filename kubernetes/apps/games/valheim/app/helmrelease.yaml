@@ -67,8 +67,6 @@ spec:
         annotations:
           io.cilium/lb-ipam-ips: "${SECRET_LB_VALHEIM_ADDR}"
         ports:
-          http:
-            port: 80
           steam1:
             port: 2456
             protocol: UDP
@@ -81,18 +79,19 @@ spec:
             port: 2458
             protocol: UDP
             targetPort: 2456
-          supervisor:
+          http:
             port: 9001
             protocol: TCP
     ingress:
       main:
         enabled: true
-        className: nginx
+        ingressClassName: "nginx-external"
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
         hosts:
           - host: &host "vh.${SECRET_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
         tls:
           - hosts:
               - *host
