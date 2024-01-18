@@ -31,11 +31,27 @@ spec:
               tag: latest
               pullPolicy: Always
 
-            # env:
-            #   ...
-            envFrom:
-              - configMapRef:
-                  name: valheim-config
+            env:
+              SERVER_NAME: ${SECRET_VALHEIM_SERVER_NAME}
+              WORLD_NAME: ${SECRET_VALHEIM_WORLD_NAME}
+              SERVER_PASS: ${SECRET_VALHEIM_SERVER_PASS}
+              RESTART_MSG: "Valheim server rebooting, brb!"
+              START_MSG: "Valheim is back!"
+              UPDATE_RESTART_MSG: "Valeim is restarting to apply an update!"
+              BACKUP_MSG: "Valheim backup to file @BACKUP_FILE@ is starting"
+              POST_BACKUP_MSG: "Valheim backup complete! ----> @BACKUP_FILE@"
+              PRE_UPDATE_MSG: "Valheim is checking for updates."
+              PRE_SHUTDOWN_MSG: "Valheim Server coming down"
+              POST_UPDATE_MSG: "Valheim update checks complete."
+              PRE_RESTART_HOOK: 'curl -sfSL -X POST -H "Content-Type: application/json" -d "{\"username\":\"Valheim-bot\",\"content\":\"$UPDATE_RESTART_MSG\"}" "${SECRET_VALHEIM_DISCORD}" && sleep 60'
+              POST_START_HOOK: 'curl -sfSL -X POST -H "Content-Type: application/json" -d "{\"username\":\"Valheim-bot\",\"content\":\"$START_MSG\"}" "${SECRET_VALHEIM_DISCORD}" && sleep 60'
+              POST_SERVER_SHUTDOWN_HOOK: 'curl -sfSL -X POST -H "Content-Type: application/json" -d "{\"username\":\"Valheim-bot\",\"content\":\"$DOWN_MSG\"}" "${SECRET_VALHEIM_DISCORD}" && sleep 60'
+              PRE_SERVER_SHUTDOWN_HOOK: 'curl -sfSL -X POST -H "Content-Type: application/json" -d "{\"username\":\"Valheim-bot\",\"content\":\"$PRE_SHUTDOWN_MSG\"}" "${SECRET_VALHEIM_DISCORD}"'
+              SERVER_PUBLIC: "true"
+              SUPERVISOR_HTTP: "true"
+              SUPERVISOR_HTTP_PASS: ${SECRET_VALHEIM_SUPERVISOR_PASS}
+              STATUS_HTTP: "true"
+              TZ: ${TIMEZONE}
 
             resources:
               requests:
