@@ -17,7 +17,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: tdar-cache-claim
+  name: tdarr-cache-claim
 spec:
   accessModes:
   - ReadWriteMany
