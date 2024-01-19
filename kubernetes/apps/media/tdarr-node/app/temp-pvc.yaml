@@ -6,7 +6,6 @@ spec:
   capacity:
     storage: 1Mi # Size does not matter
   accessModes: ["ReadWriteMany"]
-  storageClassName: videos-nfs
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${NAS_IP}
@@ -22,7 +21,6 @@ metadata:
 spec:
   accessModes:
   - ReadWriteMany
-  storageClassName: videos-nfs
   resources:
     requests:
       storage: 500Gi
