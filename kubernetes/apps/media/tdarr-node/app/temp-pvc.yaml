@@ -22,7 +22,7 @@ metadata:
 spec:
   accessModes:
   - ReadWriteMany
-  storageClassName: tdarr_cache
+  storageClassName: tdarr-cache
   resources:
     requests:
       storage: 500Gi
