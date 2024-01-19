@@ -18,11 +18,11 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: videos-nfs
+  name: tdar-cache-claim
 spec:
   accessModes:
   - ReadWriteMany
-  storageClassName: tdarr-cache
+  storageClassName: videos-nfs
   resources:
     requests:
       storage: 500Gi
