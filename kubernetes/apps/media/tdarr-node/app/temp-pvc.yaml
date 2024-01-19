@@ -6,7 +6,6 @@ spec:
   capacity:
     storage: 1Mi # Size does not matter
   accessModes: ["ReadWriteMany"]
-  storageClassName: tdarr-cache
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${NAS_IP}
@@ -22,7 +21,6 @@ metadata:
 spec:
   accessModes:
   - ReadWriteMany
-  storageClassName: tdarr-cache
   resources:
     requests:
       storage: 500Gi
