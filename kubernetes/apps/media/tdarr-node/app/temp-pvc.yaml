@@ -1,33 +1,28 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: tdarr-temp
+  name: tdarr-cache
 spec:
   capacity:
-    storage: 500Gi
-  accessModes:
-  - ReadWriteMany
-  persistentVolumeReclaimPolicy: Delete
-  storageClassName: local-hostpath
-  local:
-    path: /tdarr-temp
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - k3s-one
+    storage: 1Mi # Size does not matter
+  accessModes: ["ReadWriteMany"]
+  storageClassName: tdarr-cache
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ${NAS_IP}
+    path: /volume1/tdarr-cache
+  # Note: The first two options are strictly for NFSv4.2
+  # "nfsvers=4.2", "nconnect=8",
+  mountOptions: ["hard", "noatime"]
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: tdarr-temp-claim
+  name: tdarr-cache-claim
 spec:
   accessModes:
   - ReadWriteMany
-  storageClassName: local-hostpath
+  storageClassName: tdarr_cache
   resources:
     requests:
       storage: 500Gi
