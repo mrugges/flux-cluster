@@ -33,6 +33,9 @@ subsets:
       - name: http
         port: 32769
         protocol: TCP
+      - name: http2
+        port: 32768
+        protocol: TCP
 ---
 apiVersion: v1
 kind: Service

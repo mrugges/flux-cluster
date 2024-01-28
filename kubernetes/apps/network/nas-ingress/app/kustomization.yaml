@@ -12,3 +12,4 @@ resources:
   - ./jellyfin-ingress.yaml
   - ./audiobookshelf-ingress.yaml
   - ./duplicati-ingress.yaml
+  - ./minio.ingress.yaml
