@@ -5,7 +5,6 @@ kind: HelmRelease
 metadata:
   name: onepassword-connect
 spec:
-  suspend: false
   interval: 15m
   chart:
     spec:
@@ -53,7 +52,7 @@ spec:
                   httpGet:
                     path: /heartbeat
                     port: *apiPort
-                  initialDelaySeconds: 25
+                  initialDelaySeconds: 35
                   periodSeconds: 30
                   failureThreshold: 3
               readiness:
@@ -63,7 +62,7 @@ spec:
                   httpGet:
                     path: /health
                     port: *apiPort
-                  initialDelaySeconds: 25
+                  initialDelaySeconds: 35
               startup:
                 enabled: false
             securityContext: &securityContext
@@ -97,7 +96,7 @@ spec:
                   httpGet:
                     path: /heartbeat
                     port: *syncPort
-                  initialDelaySeconds: 15
+                  initialDelaySeconds: 35
                   periodSeconds: 30
                   failureThreshold: 3
               readiness:
@@ -107,7 +106,7 @@ spec:
                   httpGet:
                     path: /health
                     port: *syncPort
-                  initialDelaySeconds: 15
+                  initialDelaySeconds: 35
               startup:
                 enabled: false
               securityContext: *securityContext
