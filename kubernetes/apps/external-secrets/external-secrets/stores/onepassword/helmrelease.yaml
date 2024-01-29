@@ -47,7 +47,7 @@ spec:
                     key: 1password-credentials.json
             probes:
               liveness:
-                enabled: true
+                enabled: false
                 custom: true
                 spec:
                   httpGet:
@@ -57,7 +57,7 @@ spec:
                   periodSeconds: 30
                   failureThreshold: 3
               readiness:
-                enabled: true
+                enabled: false
                 custom: true
                 spec:
                   httpGet:
