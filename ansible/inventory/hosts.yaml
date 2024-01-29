@@ -6,3 +6,8 @@ kubernetes:
         k3s-one:
           ansible_user: ulver
           ansible_host: 10.10.96.2
+    worker:
+      hosts:
+        k3s-three:
+          ansible_user: ulver
+          ansible_host: 10.10.96.8
