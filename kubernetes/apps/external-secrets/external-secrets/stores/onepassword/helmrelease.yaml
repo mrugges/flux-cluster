@@ -5,6 +5,7 @@ kind: HelmRelease
 metadata:
   name: onepassword-connect
 spec:
+  timeout: 5m
   interval: 15m
   chart:
     spec:
