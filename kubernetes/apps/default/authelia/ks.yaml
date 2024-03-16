@@ -3,21 +3,26 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app photoprism
+  name: &app authelia
   namespace: flux-system
 spec:
-  targetNamespace: media
+  targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/media/photoprism/app
+  dependsOn:
+    - name: redis
+    - name: external-secrets-stores
+  path: ./kubernetes/apps/default/authelia/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  dependsOn:
-    - name: external-secrets-stores
   wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: auth
