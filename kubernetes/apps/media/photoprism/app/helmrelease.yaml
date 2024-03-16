@@ -91,7 +91,7 @@ spec:
           - path: *storage
       originals:
         type: nfs
-        server: "10.10.96.10"
+        server: "${NAS_IP}"
         path: *originals
         globalMounts:
           - path: *originals
