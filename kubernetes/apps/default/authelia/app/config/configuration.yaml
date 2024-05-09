@@ -23,17 +23,22 @@ authentication_backend:
   refresh_interval: 1m
 
 session:
+  secret: "{{ .AUTHELIA_SESSION_SECRET }}"
   same_site: lax
   inactivity: 5m
   expiration: 1h
   remember_me: 1M
   cookies:
-    - name: mrugge_session
-      domain: ${SECRET_DOMAIN}
+    - domain: ${SECRET_DOMAIN}
       authelia_url: https://auth.${SECRET_DOMAIN}
       default_redirection_url: https://${SECRET_DOMAIN}
+      name: mrugges_session
+      same_site: 'lax'
+      inactivity: '5m'
+      expiration: '1h'
+      remember_me: '1d'
   redis:
-    database_index: 2
+    database_index: 1
     host: dragonfly.database.svc.cluster.local
 
 notifier:
