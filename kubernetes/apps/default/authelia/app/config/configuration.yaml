@@ -22,19 +22,16 @@ authentication_backend:
   refresh_interval: 1m
 
 session:
+  secret: "{{ .AUTHELIA_SESSION_SECRET }}"
   same_site: lax
   inactivity: 5m
   expiration: 1h
   remember_me: 1M
   cookies:
-    - domain: ${SECRET_DOMAIN}
+    - name: mrugge_session
+      domain: ${SECRET_DOMAIN}
       authelia_url: https://auth.${SECRET_DOMAIN}
       default_redirection_url: https://${SECRET_DOMAIN}
-      name: mrugge_session
-      same_site: 'lax'
-      inactivity: '5m'
-      expiration: '1h'
-      remember_me: '1d'
   redis:
     database_index: 2
     host: dragonfly.database.svc.cluster.local
@@ -43,7 +40,7 @@ notifier:
   disable_startup_check: true
   smtp:
     address: smtp-relay.default.svc.cluster.local:25
-    sender: Authelia <authelia@buhl.casa>
+    sender: Authelia <mrugges@gmail.com>
     disable_require_tls: true
 
 totp:
