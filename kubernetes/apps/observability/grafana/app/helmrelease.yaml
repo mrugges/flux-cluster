@@ -35,7 +35,7 @@ spec:
         image: ghcr.io/onedr0p/postgres-init:16
         envFrom:
           - secretRef:
-              name: &secret grafana-secret
+              name: &secret grafana-admin-secret
     replicas: 3
     env:
       GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.${SECRET_DOMAIN}/api/oidc/userinfo
