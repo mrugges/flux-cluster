@@ -36,7 +36,7 @@ spec:
       dashboard:
         ingressClassName: internal
         host:
-          name: rook.devbu.io
+          name: rook.${SECRET_DOMAIN}
           path: /
     toolbox:
       enabled: true
@@ -217,5 +217,5 @@ spec:
           enabled: true
           ingressClassName: internal
           host:
-            name: rgw.devbu.io
+            name: rgw.${SECRET_DOMAIN}
             path: /
