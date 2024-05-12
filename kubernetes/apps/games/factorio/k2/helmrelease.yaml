@@ -77,7 +77,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  name: factorio-k2
         tls:
           - hosts:
               - *host
