@@ -48,7 +48,6 @@ spec:
             mountPath: /factorio/
         securityContext:
           runAsUser: 0
-
     service:
       main:
         type: LoadBalancer
