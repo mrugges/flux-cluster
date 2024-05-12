@@ -70,6 +70,9 @@ spec:
       main:
         enabled: true
         ingressClassName: nginx
+        annotations:
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+
         hosts:
           - host: &host "factorio.${SECRET_DOMAIN}"
             paths:
