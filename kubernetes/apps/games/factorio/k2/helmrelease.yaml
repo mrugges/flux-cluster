@@ -81,7 +81,7 @@ spec:
       helmconfig:
         enabled: "true"
         type: "secret"
-        name: factorio-k2-secret
+        name: factorio-k2
     startupProbe:
       enabled: true
       failureThreshold: 30
