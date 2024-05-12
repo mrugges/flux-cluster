@@ -51,10 +51,8 @@ spec:
     service:
       main:
         type: LoadBalancer
-        externalTrafficPolicy: Cluster
+        externalTrafficPolicy: Local
         loadBalancerIP: "${SECRET_LB_VALHEIM_ADDR}"
-        annotations:
-          metallb.universe.tf/allow-shared-ip: factorio
         ports:
           http:
             enabled: false
