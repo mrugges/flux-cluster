@@ -68,6 +68,20 @@ spec:
             primary: true
             port: *rcon
             protocol: TCP
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        hosts:
+          - host: &host "factorio.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: main
+        tls:
+          - hosts:
+              - *host
+
     # podSecurityContext:
     #   runAsUser: 568
     #   runAsGroup: 568
