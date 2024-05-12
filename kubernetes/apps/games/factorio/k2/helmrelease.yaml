@@ -52,7 +52,6 @@ spec:
       main:
         type: LoadBalancer
         externalTrafficPolicy: Local
-        loadBalancerIP: "${SECRET_LB_VALHEIM_ADDR}"
         ports:
           http:
             enabled: false
