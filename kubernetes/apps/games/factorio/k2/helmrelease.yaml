@@ -49,7 +49,7 @@ spec:
         securityContext:
           runAsUser: 0
     service:
-      main:
+      factorio-k2:
         type: LoadBalancer
         externalTrafficPolicy: Cluster
         loadBalancerIP: "${SECRET_LB_VALHEIM_ADDR}"
@@ -69,7 +69,7 @@ spec:
             port: *rcon
             protocol: TCP
     ingress:
-      main:
+      factorio-k2:
         enabled: true
         ingressClassName: nginx
         hosts:
