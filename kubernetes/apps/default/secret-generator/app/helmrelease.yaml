@@ -1,0 +1,38 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: secret-generator
+spec:
+  releaseName: secret-generator
+  interval: 30m
+  maxHistory: 3
+  chart:
+    spec:
+      chart: kubernetes-secret-generator
+      version: 3.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: kubernetes-secret-generator
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    image:
+      registry: ghcr.io
+      repository: mittwald/kubernetes-secret-generator
+      tag: v3.4.0
+    resources:
+      requests:
+        cpu: 20m
+        memory: 128Mi
+      limits:
+        memory: 192Mi

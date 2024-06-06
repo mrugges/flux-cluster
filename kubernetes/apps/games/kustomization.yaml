@@ -5,3 +5,4 @@ resources:
   - ./namespace.yaml
   - ./valheim/ks.yaml
   - ./factorio/ks.yaml
+  - ./minecraft/ks.yaml
