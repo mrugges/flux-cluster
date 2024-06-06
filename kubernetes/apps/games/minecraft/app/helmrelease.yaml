@@ -1,0 +1,183 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app minecraft
+spec:
+  interval: 30m
+  maxHistory: 3
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    defaultPodOptions:
+      automountServiceAccountToken: false
+    controllers:
+      minecraft:
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: 'true'
+        pod:
+          labels:
+            ingress.home.arpa/nginx-external: allow
+            ingress.home.arpa/playit: allow
+            ingress.home.arpa/homepage: allow
+            monitoring.home.arpa/prometheus: allow
+            egress.home.arpa/kubedns: allow
+          annotations:
+            reloader.stakater.com/auto: 'true'
+          securityContext:
+            runAsUser: ${APP_UID}
+            runAsGroup: ${APP_GID}
+            fsGroup: ${APP_GID}
+            fsGroupChangePolicy: OnRootMismatch
+        containers:
+          app:
+            image:
+              repository: ghcr.io/itzg/minecraft-server
+              tag: java21@sha256:6e1d3c0dc96379b7f85a7519873ba6ce60cdc0da82d76434c06e40a726d4720e
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  periodSeconds: 60
+                  exec: &mc-health {command: ["mc-health"]}
+              readiness: *probes
+              startup:
+                <<: *probes
+                spec:
+                  initialDelaySeconds: 60
+                  periodSeconds: 1
+                  failureThreshold: 300
+                  exec: *mc-health
+            env:
+              # Server Configuration
+              ## General
+              EULA: 'true'
+              SERVER_NAME: 'MPOF'
+              TYPE: FABRIC
+              FORCE_REDOWNLOAD: 'true'
+
+              # renovate: depName=minecraft datasource=custom.minecraft
+              VERSION: 1.20.6
+              MOTD: 'be nice'
+              DIFFICULTY: hard
+              SPAWN_PROTECTION: 0
+              SEED: '-2135836821937050197'
+              FORCE_REDOWLOAD: 'true'
+              ENABLE_WHITELIST: 'true'
+              # Logging
+              ENABLE_ROLLING_LOGS: 'true'
+              LOG_TIMESTAMP: 'true'
+              # Performance
+              JVM_XX_OPTS: '-XX:MaxRAMPercentage=75'
+              MAX_MEMORY: 8G
+              USE_AIKAR_FLAGS: 'true'
+              SNOOPER_ENABLED: 'false'
+              VIEW_DISTANCE: 14
+              ## Mods
+              REMOVE_OLD_MODS: 'true'
+              MODRINTH_DEFAULT_VERSION_TYPE: release
+              # fabricexporter,bluemap-sign-markers aren't compatible with 1.20.6
+              MODRINTH_PROJECTS: >
+                fabric-api,
+                spark,
+                floodgate:beta
+              VANILLA_TWEAKS_SHARE_CODES: ozxXFS # Coord HUD, Anti-Endermen Griefing
+              ## RCON
+              RCON_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: minecraft-rcon
+                    key: rcon_password
+              ENABLE_QUERY: 'true'
+              # Whitelist / Ops
+              WHITELIST:
+                valueFrom:
+                  secretKeyRef:
+                    name: minecraft
+                    key: whitelist
+              EXISTING_WHITELIST_FILE: SYNC_FILE_MERGE_LIST
+              OPS:
+                valueFrom:
+                  secretKeyRef:
+                    name: minecraft
+                    key: ops
+              EXISTING_OPS_FILE: SYNCHRONIZE
+              ## External resources - remove after first boot
+              #WORLD: 'http://192.168.1.234/server-world.zip'
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities:
+                drop: [ALL]
+            resources:
+              requests:
+                cpu: 250m
+                memory: 4Gi
+              limits:
+                memory: 8Gi
+    service:
+      minecraft:
+        controller: minecraft
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+
+        ports:
+          java:
+            port: 25565
+            protocol: TCP
+          bedrock:
+            port: 19132
+            protocol: UDP
+          map:
+            port: 8100
+          metrics:
+            port: 25585
+    # serviceMonitor:
+    #   metrics:
+    #     enabled: true
+    #     serviceName: minecraft
+    #     endpoints:
+    #       - port: metrics
+    #         scheme: http
+    #         path: /
+    #         interval: 1m
+    ingress:
+      map:
+        className: nginx-external
+        hosts:
+          - host: &host "mc.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: minecraft
+                  port: map
+        tls:
+          - hosts:
+              - *host
+        annotations:
+          gethomepage.dev/name: minecraft map (survival)
+          gethomepage.dev/enabled: 'true'
+          gethomepage.dev/group: games
+          gethomepage.dev/icon: mdi-minecraft
+          external-dns.alpha.kubernetes.io/target: ext.cfg.sh
+    persistence:
+      data:
+        existingClaim: ${VOLSYNC_CLAIM}

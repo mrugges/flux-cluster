@@ -1,0 +1,18 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-secret-generator
+  namespace: flux-system
+spec:
+  targetNamespace: system
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &app secret-generator
+  interval: 10m
+  path: ./kubernetes/apps/default/secret-generator/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  wait: false
