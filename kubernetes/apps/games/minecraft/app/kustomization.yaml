@@ -6,13 +6,6 @@ resources:
   - ./secret.yaml
   - ./externalsecret.yaml
   - ./networkpolicy.yaml
-configMapGenerator:
-  - name: minecraft-bluemap
-    files:
-      - core.conf=./config/bluemap/core.conf
-      - file.conf=./config/bluemap/storages/file.conf
-      - nether.conf=./config/bluemap/maps/nether.conf
-      - end.conf=./config/bluemap/maps/end.conf
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
