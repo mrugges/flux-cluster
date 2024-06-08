@@ -27,7 +27,7 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: dragonfly-operator
+    - name: dragonfly
       namespace: database
   values:
     controllers:
