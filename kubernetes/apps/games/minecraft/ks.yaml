@@ -2,13 +2,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: app-minecraft
+  name: &app minecraft
   namespace: flux-system
 spec:
   targetNamespace: games
   commonMetadata:
     labels:
-      app.kubernetes.io/name: &app minecraft
+      app.kubernetes.io/name: *app
       app.kubernetes.io/instance: survival
   interval: 10m
   path: ./kubernetes/apps/games/minecraft/app
@@ -16,7 +16,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  wait: true
+  wait: false
   postBuild:
     substitute:
       APP: *app
