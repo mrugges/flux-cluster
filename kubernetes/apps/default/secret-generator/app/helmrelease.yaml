@@ -29,7 +29,6 @@ spec:
     image:
       registry: ghcr.io
       repository: mittwald/kubernetes-secret-generator
-      tag: v3.4.0
     resources:
       requests:
         cpu: 20m
