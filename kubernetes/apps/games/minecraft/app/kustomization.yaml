@@ -6,6 +6,7 @@ resources:
   - ./secret.yaml
   - ./externalsecret.yaml
   - ./networkpolicy.yaml
+  - ./pvc.yaml
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
