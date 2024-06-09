@@ -26,8 +26,9 @@ spec:
     keepHistory: false
   values:
     image:
-      registry: quay.io
-      repository: mittwald/kubernetes-secret-generator
+      registry: ghcr.io
+      repository: belodetek/kubernetes-secret-generator
+      tag: 0.0.4
     resources:
       requests:
         cpu: 20m
