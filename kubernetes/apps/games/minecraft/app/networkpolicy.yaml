@@ -28,6 +28,7 @@ spec:
         - matchPattern: '*.modrinth.com'
         - matchPattern: '*.mojang.com'
         - matchPattern: '*.minecraftservices.com'
+        - matchPattern: 'meta.fabricmc.net'
         - matchName: vanillatweaks.net
         - matchName: playerdb.co
         - matchName: github.com
