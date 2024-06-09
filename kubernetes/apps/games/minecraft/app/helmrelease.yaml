@@ -160,7 +160,7 @@ spec:
     #         path: /
     #         interval: 1m
     ingress:
-      map:
+      main:
         className: external
         hosts:
           - host: &host "mc.${SECRET_DOMAIN}"
@@ -168,12 +168,14 @@ spec:
               - path: /
                 service:
                   identifier: minecraft
-                  port: map
+                  port: java
         tls:
           - hosts:
               - *host
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+
+
 
 
     persistence:
