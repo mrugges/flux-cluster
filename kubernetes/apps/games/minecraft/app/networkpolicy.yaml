@@ -1,4 +1,3 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/cilium.io/ciliumnetworkpolicy_v2.json
 ---
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
@@ -28,7 +27,6 @@ spec:
         - matchPattern: '*.modrinth.com'
         - matchPattern: '*.mojang.com'
         - matchPattern: '*.minecraftservices.com'
-        - matchPattern: 'meta.fabricmc.net'
         - matchName: vanillatweaks.net
         - matchName: playerdb.co
         - matchName: github.com
