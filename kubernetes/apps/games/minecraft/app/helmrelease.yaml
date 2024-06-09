@@ -111,13 +111,13 @@ spec:
               WHITELIST:
                 valueFrom:
                   secretKeyRef:
-                    name: minecraft
+                    name: minecraft-survival
                     key: whitelist
               EXISTING_WHITELIST_FILE: SYNC_FILE_MERGE_LIST
               OPS:
                 valueFrom:
                   secretKeyRef:
-                    name: minecraft
+                    name: minecraft-survival
                     key: ops
               EXISTING_OPS_FILE: SYNCHRONIZE
               ## External resources - remove after first boot
