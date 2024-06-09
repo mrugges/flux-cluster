@@ -26,7 +26,7 @@ spec:
     keepHistory: false
   values:
     image:
-      registry: ghcr.io
+      registry: quay.io
       repository: mittwald/kubernetes-secret-generator
     resources:
       requests:
