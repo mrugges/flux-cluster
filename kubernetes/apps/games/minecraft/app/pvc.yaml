@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minecraft-server
+  namespace: games
+  labels:
+    app.kubernetes.io/name: minecraft-survival
+    app.kubernetes.io/instance: minecraft-survival
+    snapshot.home.arpa/enabled: "true"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: local-hostpath
