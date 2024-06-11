@@ -169,7 +169,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: minecraft
+                  identifier: minecraft
                   port: map
         tls:
           - hosts:
