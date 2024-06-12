@@ -131,8 +131,6 @@ spec:
           bedrock:
             port: 19132
             protocol: UDP
-          map:
-            port: 8100
           metrics:
             port: 25585
     # serviceMonitor:
