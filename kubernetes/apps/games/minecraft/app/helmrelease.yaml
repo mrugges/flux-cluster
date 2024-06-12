@@ -28,7 +28,7 @@ spec:
     defaultPodOptions:
       automountServiceAccountToken: false
     controllers:
-      main:
+      minecraft:
         replicas: 1
         strategy: Recreate
         containers:
@@ -119,8 +119,8 @@ spec:
               limits:
                 memory: 8Gi
     service:
-      main:
-        controller: main
+      minecraft:
+        controller: minecraft
         type: LoadBalancer
         externalTrafficPolicy: Local
 
@@ -138,7 +138,7 @@ spec:
     #         path: /
     #         interval: 1m
     ingress:
-      main:
+      minecraft:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
@@ -147,7 +147,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: minecraft
                   port: java
         tls:
           - hosts:
