@@ -120,7 +120,7 @@ spec:
                 memory: 8Gi
     service:
       main:
-        controller: minecraft
+        controller: main
         type: LoadBalancer
         externalTrafficPolicy: Local
 
