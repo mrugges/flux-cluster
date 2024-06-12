@@ -28,7 +28,7 @@ spec:
     defaultPodOptions:
       automountServiceAccountToken: false
     controllers:
-      minecraft:
+      main:
         replicas: 1
         strategy: Recreate
         containers:
