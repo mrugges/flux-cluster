@@ -153,6 +153,7 @@ spec:
               - path: /
                 service:
                   name: minecraft
+                  port: map
         tls:
           - hosts:
               - *host
