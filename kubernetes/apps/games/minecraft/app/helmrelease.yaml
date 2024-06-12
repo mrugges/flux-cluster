@@ -119,7 +119,7 @@ spec:
               limits:
                 memory: 8Gi
     service:
-      minecraft:
+      main:
         controller: minecraft
         type: LoadBalancer
         externalTrafficPolicy: Local
@@ -128,11 +128,6 @@ spec:
           java:
             port: 25565
             protocol: TCP
-          bedrock:
-            port: 19132
-            protocol: UDP
-          metrics:
-            port: 25585
     # serviceMonitor:
     #   metrics:
     #     enabled: true
@@ -152,7 +147,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: minecraft
+                  identifier: main
                   port: java
         tls:
           - hosts:
