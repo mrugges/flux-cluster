@@ -32,7 +32,7 @@ spec:
     - name: vector-aggregator
       namespace: observability
   values:
-    deploymentMode: Monolithic
+    deploymentMode: SingleBinary
     loki:
       ingester:
         chunk_encoding: snappy
