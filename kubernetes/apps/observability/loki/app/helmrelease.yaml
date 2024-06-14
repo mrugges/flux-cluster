@@ -83,14 +83,14 @@ spec:
         analytics:
           reporting_enabled: false
     gateway:
-      replicas: 3
+      replicas: 1
       image:
         registry: ghcr.io
       ingress:
         enabled: true
         ingressClassName: internal
         hosts:
-          - host: loki.devbu.io
+          - host: loki.${SECRET_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
