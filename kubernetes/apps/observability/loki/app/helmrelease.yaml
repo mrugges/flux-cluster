@@ -106,3 +106,5 @@ spec:
       enabled: false
     test:
       enabled: false
+    minio:
+      enabled: true
