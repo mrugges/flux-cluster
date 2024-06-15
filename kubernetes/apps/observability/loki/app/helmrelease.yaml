@@ -82,8 +82,8 @@ spec:
           rule_path: /rules/fake
         analytics:
           reporting_enabled: false
-		singleBinary:
-			replicas: 1
+    singleBinary:
+      replicas: 1
     backend:
       replicas: 0
     gateway:
