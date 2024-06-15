@@ -76,7 +76,7 @@ spec:
           enable_alertmanager_v2: true
           alertmanager_url: http://alertmanager-operated.observability.svc.cluster.local:9093
           storage:
-            type: 'filesystem'
+            type: local
             local:
               directory: /rules
           rule_path: /rules/fake
