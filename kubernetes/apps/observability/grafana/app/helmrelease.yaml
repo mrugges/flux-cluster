@@ -422,7 +422,7 @@ spec:
     ingress:
       enabled: true
       ingressClassName: internal
-      hosts: ["grafana.devbu.io"]
+      hosts: ["grafana.${SECRET_DOMAIN}"]
     persistence:
       enabled: false
     testFramework:
