@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app minecraft
+  name: minecraft
 spec:
   interval: 30m
   maxHistory: 3
@@ -37,76 +37,107 @@ spec:
               repository: ghcr.io/itzg/minecraft-server
               tag: java21@sha256:6e1d3c0dc96379b7f85a7519873ba6ce60cdc0da82d76434c06e40a726d4720e
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
                 custom: true
                 spec:
                   periodSeconds: 60
-                  exec: &mc-health {command: ["mc-health"]}
-              readiness: *probes
+                  exec:
+                    command: ["mc-health"]
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  periodSeconds: 60
+                  exec:
+                    command: ["mc-health"]
               startup:
-                <<: *probes
+                enabled: true
+                custom: true
                 spec:
                   initialDelaySeconds: 60
                   periodSeconds: 1
                   failureThreshold: 300
-                  exec: *mc-health
+                  exec:
+                    command: ["mc-health"]
             env:
               # Server Configuration
               ## General
-              EULA: 'true'
-              SERVER_NAME: 'MPOF'
-              TYPE: FABRIC
-              FORCE_REDOWNLOAD: 'true'
+              - name: EULA
+                value: 'true'
+              - name: SERVER_NAME
+                value: 'MPOF'
+              - name: TYPE
+                value: FABRIC
+              - name: FORCE_REDOWNLOAD
+                value: 'true'
 
               # renovate: depName=minecraft datasource=custom.minecraft
-              VERSION: 1.21
-              MOTD: 'be nice'
-              DIFFICULTY: hard
-              SPAWN_PROTECTION: 0
-              SEED: '-2135836821937050197'
-              FORCE_REDOWLOAD: 'true'
-              ENABLE_WHITELIST: 'false'
+              - name: VERSION
+                value: 1.21
+              - name: MOTD
+                value: 'be nice'
+              - name: DIFFICULTY
+                value: hard
+              - name: SPAWN_PROTECTION
+                value: '0'
+              - name: SEED
+                value: '-2135836821937050197'
+              - name: ENABLE_WHITELIST
+                value: 'false'
               # Logging
-              ENABLE_ROLLING_LOGS: 'true'
-              LOG_TIMESTAMP: 'true'
+              - name: ENABLE_ROLLING_LOGS
+                value: 'true'
+              - name: LOG_TIMESTAMP
+                value: 'true'
               # Performance
-              JVM_XX_OPTS: '-XX:MaxRAMPercentage=75'
-              MAX_MEMORY: 8G
-              USE_AIKAR_FLAGS: 'true'
-              SNOOPER_ENABLED: 'false'
-              VIEW_DISTANCE: 14
+              - name: JVM_XX_OPTS
+                value: '-XX:MaxRAMPercentage=75'
+              - name: MAX_MEMORY
+                value: 8G
+              - name: USE_AIKAR_FLAGS
+                value: 'true'
+              - name: SNOOPER_ENABLED
+                value: 'false'
+              - name: VIEW_DISTANCE
+                value: '14'
               ## Mods
-              REMOVE_OLD_MODS: 'true'
-              MODRINTH_DEFAULT_VERSION_TYPE: release
-              # fabricexporter,bluemap-sign-markers aren't compatible with 1.20.6
-              MODRINTH_PROJECTS: >
-                fabric-api,
-                spark,
-                floodgate:beta
-              VANILLA_TWEAKS_SHARE_CODES: ozxXFS # Coord HUD, Anti-Endermen Griefing
+              - name: REMOVE_OLD_MODS
+                value: 'true'
+              - name: MODRINTH_DEFAULT_VERSION_TYPE
+                value: release
+              - name: MODRINTH_PROJECTS
+                value: "fabric-api,spark,floodgate:beta"
+              - name: VANILLA_TWEAKS_SHARE_CODES
+                value: "ozxXFS"
               ## RCON
-              RCON_PASSWORD:
+              - name: RCON_PASSWORD
                 valueFrom:
                   secretKeyRef:
                     name: minecraft-rcon
                     key: rcon_password
-              ENABLE_QUERY: 'true'
+              - name: ENABLE_QUERY
+                value: 'true'
               # Whitelist / Ops
-              WHITELIST:
+              - name: WHITELIST
                 valueFrom:
                   secretKeyRef:
                     name: minecraft-survival
                     key: whitelist
-              EXISTING_WHITELIST_FILE: SYNC_FILE_MERGE_LIST
-              OPS:
+              - name: EXISTING_WHITELIST_FILE
+                value: SYNC_FILE_MERGE_LIST
+              - name: OPS
                 valueFrom:
                   secretKeyRef:
                     name: minecraft-survival
                     key: ops
-              EXISTING_OPS_FILE: SYNCHRONIZE
+              - name: EXISTING_OPS_FILE
+                value: SYNCHRONIZE
               ## External resources - remove after first boot
               #WORLD: 'http://192.168.1.234/server-world.zip'
+            securityContext:
+              runAsUser: 1000
+              fsGroup: 3000
             resources:
               requests:
                 cpu: 250m
@@ -118,27 +149,17 @@ spec:
         controller: minecraft
         type: LoadBalancer
         externalTrafficPolicy: Local
-
         ports:
           java:
             port: 25565
             protocol: TCP
-    # serviceMonitor:
-    #   metrics:
-    #     enabled: true
-    #     serviceName: minecraft
-    #     endpoints:
-    #       - port: metrics
-    #         scheme: http
-    #         path: /
-    #         interval: 1m
     ingress:
       minecraft:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hosts:
-          - host: &host "mc.${SECRET_DOMAIN}"
+          - host: mc.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
@@ -146,9 +167,8 @@ spec:
                   port: java
         tls:
           - hosts:
-              - *host
-
-
+              - mc.${SECRET_DOMAIN}
     persistence:
       data:
         existingClaim: ${VOLSYNC_CLAIM}
+
