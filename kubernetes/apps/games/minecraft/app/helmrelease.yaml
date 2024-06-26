@@ -107,11 +107,6 @@ spec:
               EXISTING_OPS_FILE: SYNCHRONIZE
               ## External resources - remove after first boot
               #WORLD: 'http://192.168.1.234/server-world.zip'
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false
-              capabilities:
-                drop: [ALL]
             resources:
               requests:
                 cpu: 250m
