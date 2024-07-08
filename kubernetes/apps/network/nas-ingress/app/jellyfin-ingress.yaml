@@ -28,7 +28,7 @@ metadata:
   name: jellyfin
 subsets:
   - addresses:
-      - ip: ${NAS_IP}
+      - ip: ${WS_IP}
     ports:
       - name: http
         port: 8096
