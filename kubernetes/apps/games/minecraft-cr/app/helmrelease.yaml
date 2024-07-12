@@ -139,7 +139,7 @@ spec:
               #WORLD: 'http://192.168.1.234/server-world.zip'
             securityContext:
               runAsUser: 1000
-              fsGroup: 1000
+              fsGroup: 3000
             resources:
               requests:
                 cpu: 250m
