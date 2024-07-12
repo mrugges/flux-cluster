@@ -116,7 +116,7 @@ spec:
               - name: RCON_PASSWORD
                 valueFrom:
                   secretKeyRef:
-                    name: minecraft-rcon
+                    name: minecraft-cr-rcon
                     key: rcon_password
               - name: ENABLE_QUERY
                 value: 'true'
@@ -124,14 +124,14 @@ spec:
               - name: WHITELIST
                 valueFrom:
                   secretKeyRef:
-                    name: minecraft-survival
+                    name: minecraft-creative
                     key: whitelist
               - name: EXISTING_WHITELIST_FILE
                 value: SYNC_FILE_MERGE_LIST
               - name: OPS
                 valueFrom:
                   secretKeyRef:
-                    name: minecraft-survival
+                    name: minecraft-creative
                     key: ops
               - name: EXISTING_OPS_FILE
                 value: SYNCHRONIZE
