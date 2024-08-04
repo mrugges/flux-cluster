@@ -1,5 +1,6 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: valheim
@@ -9,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
       chart: app-template
-      version: 2.4.0
+      version: 3.3.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -62,6 +63,7 @@ spec:
                 cpu: 6304m
     service:
       main:
+        controller: valheim-controller
         type: LoadBalancer
         externalTrafficPolicy: Local
         ports:
@@ -83,12 +85,13 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: external
+        className: external
         hosts:
           - host: &host "vh.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
+                  port: 9001 
                   name: main
         tls:
           - hosts:
@@ -98,12 +101,12 @@ spec:
       # Persist config
       config:
         enabled: true
-        mountPath: /config
+        globalMounts:
+          - path: /config
         existingClaim: valheim-config
       # Persist World
       data:
         enabled: true
-        mountPath: /opt/valheim
+        globalMounts: 
+          - path: /opt/valheim
         existingClaim: valheim-data
-
-
