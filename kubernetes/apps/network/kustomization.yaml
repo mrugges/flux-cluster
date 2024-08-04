@@ -9,4 +9,3 @@ resources:
   - ./k8s-gateway/ks.yaml
   - ./nginx/ks.yaml
   - ./nas-ingress/ks.yaml
-  - ./playit/ks.yaml
