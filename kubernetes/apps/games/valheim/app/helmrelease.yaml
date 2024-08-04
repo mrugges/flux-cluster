@@ -63,7 +63,7 @@ spec:
                 cpu: 6304m
     service:
       main:
-        controller: valheim-controller
+        controller: main
         type: LoadBalancer
         externalTrafficPolicy: Local
         ports:
@@ -91,7 +91,7 @@ spec:
             paths:
               - path: /
                 service:
-                  port: 9001 
+                  port: 9001
                   name: main
         tls:
           - hosts:
@@ -107,6 +107,6 @@ spec:
       # Persist World
       data:
         enabled: true
-        globalMounts: 
+        globalMounts:
           - path: /opt/valheim
         existingClaim: valheim-data
