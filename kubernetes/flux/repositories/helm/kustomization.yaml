@@ -18,6 +18,7 @@ resources:
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
+  - ./ingress-nginx-charts.yaml
   - ./kubernetes-dashboard.yaml
   - ./metrics-server.yaml
   - ./mittwald.yaml
