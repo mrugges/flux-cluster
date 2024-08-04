@@ -47,3 +47,13 @@ endpoints:
       - "[STATUS] == 404"
     alerts:
       - type: pushover
+  - name: echo-server
+    group: external
+    url: https://broken.${SECRET_DOMAIN}
+    interval: 1m
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == 404"
+    alerts:
+      - type: pushover
