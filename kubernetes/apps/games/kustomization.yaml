@@ -6,4 +6,3 @@ resources:
   - ./valheim/ks.yaml
   - ./factorio/ks.yaml
   - ./minecraft/ks.yaml
-  - ./minecraft-cr/ks.yaml
