@@ -30,6 +30,10 @@ spec:
           repository: openebs/provisioner-localpv
       hostpathClass:
         name: openebs-hostpath
+      helperPod:
+        image:
+          registry: quay.io/
+          repository: openebs/provisioner-localpv
     openebs-crds:
       csi:
         volumeSnapshots:
