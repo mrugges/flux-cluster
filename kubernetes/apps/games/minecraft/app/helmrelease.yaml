@@ -42,6 +42,7 @@ spec:
                 custom: true
                 spec:
                   periodSeconds: 60
+                  initialDelaySeconds: 300
                   exec:
                     command: ["mc-health"]
               readiness:
@@ -49,15 +50,16 @@ spec:
                 custom: true
                 spec:
                   periodSeconds: 60
+                  initialDelaySeconds: 300
                   exec:
                     command: ["mc-health"]
               startup:
                 enabled: true
                 custom: true
                 spec:
-                  initialDelaySeconds: 60
+                  initialDelaySeconds: 300
                   periodSeconds: 1
-                  failureThreshold: 300
+                  failureThreshold: 1200
                   exec:
                     command: ["mc-health"]
             env:
@@ -154,8 +156,8 @@ spec:
               # fsGroup: 1000
             resources:
               requests:
-                cpu: 250m
-                memory: 16Gi
+                cpu: 1000m
+                memory: 24Gi
               limits:
                 memory: 32Gi
     service:
