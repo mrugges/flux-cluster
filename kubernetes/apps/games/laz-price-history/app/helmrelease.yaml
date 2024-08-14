@@ -1,0 +1,109 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: valheim
+spec:
+  interval: 30m
+  chart:
+    spec:
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+      chart: app-template
+      version: 2.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      main:
+        replicas: 1
+        containers:
+          main:
+            image:
+              repository: lloesche/valheim-server
+              tag: latest
+              pullPolicy: Always
+
+            env:
+              SERVER_NAME: ${SECRET_VALHEIM_SERVER_NAME}
+              WORLD_NAME: ${SECRET_VALHEIM_WORLD_NAME}
+              SERVER_PASS: ${SECRET_VALHEIM_SERVER_PASS}
+              RESTART_MSG: "Valheim server rebooting, brb!"
+              START_MSG: "Valheim is back!"
+              UPDATE_RESTART_MSG: "Valeim is restarting to apply an update!"
+              BACKUP_MSG: "Valheim backup to file @BACKUP_FILE@ is starting"
+              POST_BACKUP_MSG: "Valheim backup complete! ----> @BACKUP_FILE@"
+              PRE_UPDATE_MSG: "Valheim is checking for updates."
+              PRE_SHUTDOWN_MSG: "Valheim Server coming down"
+              POST_UPDATE_MSG: "Valheim update checks complete."
+              PRE_RESTART_HOOK: 'curl -sfSL -X POST -H "Content-Type: application/json" -d "{\"username\":\"Valheim-bot\",\"content\":\"$UPDATE_RESTART_MSG\"}" "${SECRET_VALHEIM_DISCORD}" && sleep 60'
+              POST_START_HOOK: 'curl -sfSL -X POST -H "Content-Type: application/json" -d "{\"username\":\"Valheim-bot\",\"content\":\"$START_MSG\"}" "${SECRET_VALHEIM_DISCORD}" && sleep 60'
+              POST_SERVER_SHUTDOWN_HOOK: 'curl -sfSL -X POST -H "Content-Type: application/json" -d "{\"username\":\"Valheim-bot\",\"content\":\"$DOWN_MSG\"}" "${SECRET_VALHEIM_DISCORD}" && sleep 60'
+              PRE_SERVER_SHUTDOWN_HOOK: 'curl -sfSL -X POST -H "Content-Type: application/json" -d "{\"username\":\"Valheim-bot\",\"content\":\"$PRE_SHUTDOWN_MSG\"}" "${SECRET_VALHEIM_DISCORD}"'
+              SERVER_PUBLIC: "true"
+              SUPERVISOR_HTTP: "true"
+              SUPERVISOR_HTTP_PASS: ${SECRET_VALHEIM_SUPERVISOR_PASS}
+              STATUS_HTTP: "true"
+              TZ: ${TIMEZONE}
+
+            resources:
+              requests:
+                memory: 5403Mi
+                cpu: 241m
+              limits:
+                memory: 32G
+                cpu: 6304m
+    service:
+      main:
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        ports:
+          steam1:
+            port: 2456
+            protocol: UDP
+            targetPort: 2456
+          steam2:
+            port: 2457
+            protocol: UDP
+            targetPort: 2456
+          steam3:
+            port: 2458
+            protocol: UDP
+            targetPort: 2456
+          http:
+            port: 9001
+            protocol: TCP
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: &host "vh.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: main
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      # Persist config
+      config:
+        enabled: true
+        mountPath: /config
+        existingClaim: valheim-config
+      # Persist World
+      data:
+        enabled: true
+        mountPath: /opt/valheim
+        existingClaim: valheim-data
+
+
