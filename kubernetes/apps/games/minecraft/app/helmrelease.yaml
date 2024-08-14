@@ -124,7 +124,8 @@ spec:
                     name: minecraft-survival
                     key: cf_api_key
               - name: CF_PAGE_URL
-                value: 'https://www.curseforge.com/minecraft/modpacks/all-the-mods-9'
+              #value: 'https://www.curseforge.com/minecraft/modpacks/all-the-mods-9'
+                valye: 'https://www.curseforge.com/minecraft/modpacks/prominence-2-rpg'
 
               ## RCON
               - name: RCON_PASSWORD
