@@ -66,23 +66,23 @@ spec:
               - name: EULA
                 value: 'true'
               - name: SERVER_NAME
-                value: 'MPOF'
+                value: 'GGMC'
                 #  - name: TYPE
                 #    value: FABRIC
                 #  - name: FORCE_REDOWNLOAD
                 #    value: 'true'
 
               # renovate: depName=minecraft datasource=custom.minecraft
-              - name: VERSION
-                value: 1.21
+              #- name: VERSION
+              #  value: 1.21
               - name: MOTD
                 value: 'be nice'
               - name: DIFFICULTY
                 value: hard
               - name: SPAWN_PROTECTION
                 value: '0'
-              - name: SEED
-                value: '-2135836821937050197'
+                # - name: SEED
+                # value: '-2135836821937050197'
               - name: ENABLE_WHITELIST
                 value: 'false'
               # Logging
@@ -91,18 +91,18 @@ spec:
               - name: LOG_TIMESTAMP
                 value: 'true'
               # Performance
-              - name: JVM_XX_OPTS
-                value: '-XX:MaxRAMPercentage=75'
+              #- name: JVM_XX_OPTS
+              #  value: '-XX:MaxRAMPercentage=75'
               - name: MEMORY
                 value: 4G
-              - name: MAX_MEMORY
-                value: 8G
-              - name: USE_AIKAR_FLAGS
-                value: 'true'
-              - name: SNOOPER_ENABLED
-                value: 'false'
-              - name: VIEW_DISTANCE
-                value: '14'
+                # - name: MAX_MEMORY
+                #   value: 8G
+                # - name: USE_AIKAR_FLAGS
+                #   value: 'true'
+                # - name: SNOOPER_ENABLED
+                #   value: 'false'
+                # - name: VIEW_DISTANCE
+                #   value: '14'
               ## Mods
               # - name: REMOVE_OLD_MODS
               #   value: 'true'
@@ -157,7 +157,7 @@ spec:
                 cpu: 250m
                 memory: 4Gi
               limits:
-                memory: 8Gi
+                memory: 32Gi
     service:
       minecraft:
         controller: minecraft
