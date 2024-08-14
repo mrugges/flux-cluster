@@ -67,10 +67,10 @@ spec:
                 value: 'true'
               - name: SERVER_NAME
                 value: 'MPOF'
-              - name: TYPE
-                value: FABRIC
-              - name: FORCE_REDOWNLOAD
-                value: 'true'
+                #  - name: TYPE
+                #    value: FABRIC
+                #  - name: FORCE_REDOWNLOAD
+                #    value: 'true'
 
               # renovate: depName=minecraft datasource=custom.minecraft
               - name: VERSION
@@ -102,14 +102,25 @@ spec:
               - name: VIEW_DISTANCE
                 value: '14'
               ## Mods
-              - name: REMOVE_OLD_MODS
-                value: 'true'
-              - name: MODRINTH_DEFAULT_VERSION_TYPE
-                value: release
-              - name: MODRINTH_PROJECTS
-                value: "fabric-api,spark,floodgate:beta"
-              - name: VANILLA_TWEAKS_SHARE_CODES
-                value: "ozxXFS"
+              # - name: REMOVE_OLD_MODS
+              #   value: 'true'
+              # - name: MODRINTH_DEFAULT_VERSION_TYPE
+              #   value: release
+              # - name: MODRINTH_PROJECTS
+              #   value: "fabric-api,spark,floodgate:beta"
+              # - name: VANILLA_TWEAKS_SHARE_CODES
+              #   value: "ozxXFS"
+
+              - name: MOD_PLATFORM
+                value: 'AUTO_CURSEFORGE'
+              - name: CF_API_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: minecraft-survival
+                    key: cf_api_key
+              - name: CF_PAGE_URL
+                value: 'https://www.curseforge.com/minecraft/modpacks/all-the-mods-9'
+
               ## RCON
               - name: RCON_PASSWORD
                 valueFrom:
