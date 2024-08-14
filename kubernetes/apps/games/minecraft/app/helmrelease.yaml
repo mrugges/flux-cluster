@@ -93,6 +93,8 @@ spec:
               # Performance
               - name: JVM_XX_OPTS
                 value: '-XX:MaxRAMPercentage=75'
+              - name: MEMORY
+                value: 4G
               - name: MAX_MEMORY
                 value: 8G
               - name: USE_AIKAR_FLAGS
