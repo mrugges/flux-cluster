@@ -128,7 +128,7 @@ spec:
               # value: 'https://www.curseforge.com/minecraft/modpacks/prominence-2-rpg'
                 value: 'https://www.curseforge.com/minecraft/modpacks/mc-chocolate-edition'
               - name: CF_EXCLUDE_MODS
-                value: "639842,333287,267244"
+                value: "639842,333287,267244,665884"
               - name: CF_FORCE_SYNCHRONIZE
                 value: 'true'
 
