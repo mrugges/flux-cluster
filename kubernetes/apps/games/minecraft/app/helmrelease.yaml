@@ -131,6 +131,8 @@ spec:
                 value: "639842,333287,267244,665884"
               - name: CF_FORCE_SYNCHRONIZE
                 value: 'true'
+              - name: MAX_TICK_TIME
+                value: -1
 
               ## RCON
               - name: RCON_PASSWORD
