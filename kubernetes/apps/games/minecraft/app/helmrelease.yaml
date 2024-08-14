@@ -127,6 +127,8 @@ spec:
               #value: 'https://www.curseforge.com/minecraft/modpacks/all-the-mods-9'
               # value: 'https://www.curseforge.com/minecraft/modpacks/prominence-2-rpg'
                 value: 'https://www.curseforge.com/minecraft/modpacks/mc-chocolate-edition'
+              - name: CF_EXCLUDE_MODS
+                value: "639842,333287,267244"
 
               ## RCON
               - name: RCON_PASSWORD
