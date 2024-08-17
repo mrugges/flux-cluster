@@ -28,3 +28,4 @@ resources:
   - ./rook-ceph.yaml
   - ./stakater.yaml
   - ./weave-gitops.yaml
+  - ./docker-registry-chart.yaml
