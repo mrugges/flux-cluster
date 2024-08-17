@@ -14,10 +14,10 @@ spec:
         name: twuni
         namespace: flux-system
       version: 2.2.3
-      valuesFrom:
-        - kind: secret
-          name: docker-registry
   interval: 1m0s
+  valuesFrom:
+    - kind: secret
+      name: docker-registry
   values:
     autoscaling:
       behavior: {}
