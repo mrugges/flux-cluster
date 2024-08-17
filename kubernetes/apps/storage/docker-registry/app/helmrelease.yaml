@@ -80,8 +80,6 @@ spec:
       serviceMonitor:
         enabled: false
         labels: {}
-    nodeSelector:
-      node-type: worker
     persistence:
       accessMode: ReadWriteOnce
       enabled: true
