@@ -69,7 +69,10 @@ spec:
         - &host "registry.${SECRET_DOMAIN}"
       labels: {}
       path: /
-      tls: *host
+      tls:
+        - hosts:
+            - *host
+
     metrics:
       enabled: false
       port: 5001
