@@ -14,3 +14,4 @@ resources:
   - ./duplicati-ingress.yaml
   - ./minio.ingress.yaml
   - ./sync-ingress.yaml
+  - ./photoprism-ingress.yaml
