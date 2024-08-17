@@ -66,8 +66,8 @@ spec:
       tag: 2.8.1
     ingress:
       annotations:
-        external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
-      className: internal
+        external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+      className: external
       enabled: true
       hosts:
         - &host "registry.${SECRET_DOMAIN}"
