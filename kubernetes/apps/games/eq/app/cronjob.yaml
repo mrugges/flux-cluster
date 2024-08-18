@@ -1,3 +1,4 @@
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -11,16 +12,24 @@ jobTemplate:
     template:
       spec:
         imagePullSecrets:
-        - name: docker-registry-pull-manual
+          - name: docker-registry-pull-manual
+        volumes:
+          - name: service-account-credentials-volume
+            secret:
+              secretName: laz-price-tracker
+              items:
+                - key: google-application-credentials
+                  path: sa_credentials.json
         containers:
-        - name: laz-price-history
-          image: registry.${SECRET_DOMAIN}/laz-price-history:latest
-          imagePullPolicy: Always
-          env:
-          - name: MAX_SCRAPE_ITEMS
-            value: "25"
-          - name: GOOGLE_APPLICATION_CREDENTIALS
-            valueFrom:
-              secretKeyRef:
-                name: laz-price-tracker
-                key: google-application-credentials
+          - name: laz-price-history
+            volumeMounts:
+          - name: service-account-credentials-volume
+            mountPath: /etc/gcp
+            readOnly: true
+            image: registry.${SECRET_DOMAIN}/laz-price-history:0.0.0a27
+            imagePullPolicy: IfNotPresent
+            env:
+              - name: MAX_SCRAPE_ITEMS
+                value: "25"
+              - name: GOOGLE_APPLICATION_CREDENTIALS
+                value: /etc/gcp/sa_credentials.json
