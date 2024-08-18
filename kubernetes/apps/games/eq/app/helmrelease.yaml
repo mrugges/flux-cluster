@@ -8,7 +8,7 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: laz-price-history-chart
+      chart: ../../../../../helm/laz-price-history-chart
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
