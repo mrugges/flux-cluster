@@ -15,5 +15,5 @@ spec:
           containers:
             - name: laz-price-history
               image: registry.${SECRET_DOMAIN}/laz-price-history:latest
-              imagePullPolicy: IfNotPresent
+              imagePullPolicy: Always
           restartPolicy: OnFailure
