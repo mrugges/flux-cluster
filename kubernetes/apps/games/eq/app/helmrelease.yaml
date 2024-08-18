@@ -8,11 +8,10 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: app-template
-      version: 3.3.2
+      chart: kubernetes/apps/games/eq/app/laz-price-history-chart
       sourceRef:
-        kind: HelmRepository
-        name: bjw-s-charts
+        kind: GitRepository
+        name: home-kubernetes
         namespace: flux-system
   maxHistory: 15
   install:
