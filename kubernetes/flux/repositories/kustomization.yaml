@@ -4,6 +4,6 @@ kind: Kustomization
 resources:
   - ./git
   - ./helm
-  - ./oci
-  - ./image
+  # - ./oci
+  # - ./image
   - ./secrets

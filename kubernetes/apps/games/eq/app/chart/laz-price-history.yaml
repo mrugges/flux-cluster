@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/4a9b33562227625d447e467148c8698c556ccbe9/source.toolkit.fluxcd.io/helmchart_v1beta2.json
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmChart
+metadata:
+  name: laz-price-history
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  chart: ../../../../../../helm/laz-price-history-chart
+  reconcileStrategy: Revision1
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
