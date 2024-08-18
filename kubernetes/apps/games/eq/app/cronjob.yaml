@@ -18,5 +18,10 @@ spec:
               imagePullPolicy: Always
               env:
                 - name: MAX_SCRAPE_ITEMS
-                  value: 25
+                  value: "25"
+                - name: GOOGLE_APPLICATION_CREDENTIALS
+                  valueFrom:
+                    secretKeyRef:
+                      name: laz-price-tracker
+                      key: google-application-credentials
           restartPolicy: OnFailure
