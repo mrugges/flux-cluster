@@ -14,7 +14,7 @@ spec:
             - name: docker-registry-pull-manual
           containers:
             - name: laz-price-history
-              image: registry.${SECRET_DOMAIN}/laz-price-history
+              image: registry.${SECRET_DOMAIN}/laz-price-history:latest
               imagePullPolicy: IfNotPresent
               command:
                 - /bin/sh
