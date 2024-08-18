@@ -1,27 +1,27 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: laz-price-history
+name: laz-price-history
 spec:
-  # schedule: "5 * * * *"
-  schedule: "*/2 * * * *"
-  concurrencyPolicy: Forbid
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          imagePullSecrets:
-            - name: docker-registry-pull-manual
-          containers:
-            - name: laz-price-history
-              image: registry.${SECRET_DOMAIN}/laz-price-history:latest
-              imagePullPolicy: Always
-              env:
-                - name: MAX_SCRAPE_ITEMS
-                  value: "25"
-                - name: GOOGLE_APPLICATION_CREDENTIALS
-                  valueFrom:
-                    secretKeyRef:
-                      name: laz-price-tracker
-                      key: google-application-credentials
-          restartPolicy: OnFailure
+# schedule: "5 * * * *"
+schedule: "*/2 * * * *"
+concurrencyPolicy: Forbid
+jobTemplate:
+  spec:
+    template:
+      spec:
+        imagePullSecrets:
+        - name: docker-registry-pull-manual
+        containers:
+        - name: laz-price-history
+          image: registry.${SECRET_DOMAIN}/laz-price-history:latest
+          imagePullPolicy: Always
+          env:
+          - name: MAX_SCRAPE_ITEMS
+            value: "25"
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            valueFrom:
+              secretKeyRef:
+                name: laz-price-tracker
+                key: google-application-credentials
+        restartPolicy: OnFailure
