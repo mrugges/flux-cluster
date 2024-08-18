@@ -16,9 +16,4 @@ spec:
             - name: laz-price-history
               image: registry.${SECRET_DOMAIN}/laz-price-history:latest
               imagePullPolicy: IfNotPresent
-              command:
-                - poetry
-                - run
-                - python
-                - lph/get-items.py
           restartPolicy: OnFailure
