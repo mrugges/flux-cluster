@@ -42,7 +42,7 @@ spec:
         containers:
           cron:
             image:
-              repository: laz-price-history
+              repository: docker-registry.storage.svc.cluster.local:5000/laz-price-history
             args:
               - ls
             resources:
