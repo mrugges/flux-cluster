@@ -11,6 +11,7 @@ spec:
     spec:
       template:
         spec:
+          restartPolicy: Never
           imagePullSecrets:
             - name: docker-registry-pull-manual
           volumes:
