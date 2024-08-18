@@ -17,7 +17,6 @@ spec:
               image: registry.${SECRET_DOMAIN}/laz-price-history:latest
               imagePullPolicy: IfNotPresent
               command:
-                - /bin/sh
-                - -c
-                - date; echo Hello from the Kubernetes cluster
+                - make
+                - run
           restartPolicy: OnFailure
