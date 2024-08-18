@@ -8,7 +8,7 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: kubernetes/apps/games/eq/app/laz-price-history-chart
+      chart: ./helm/laz-price-history-chart
       sourceRef:
         kind: GitRepository
         name: home-kubernetes
