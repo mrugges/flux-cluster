@@ -12,7 +12,7 @@ spec:
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
-        name: laz-price-history
+        name: home-kubernetes
         namespace: flux-system
   maxHistory: 15
   install:
