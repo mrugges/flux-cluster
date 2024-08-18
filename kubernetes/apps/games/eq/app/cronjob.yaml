@@ -3,14 +3,15 @@ kind: CronJob
 metadata:
   name: laz-price-history
 spec:
-  schedule: "5 * * * *"
+  # schedule: "5 * * * *"
+  schedule: "*/2 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
         spec:
           imagePullSecrets:
-          - name: docker-regstry-pull
+            - name: docker-regstry-pull
           containers:
             - name: laz-price-history
               image: docker-registry.storage.svc.cluster.local:5000/laz-price-history
