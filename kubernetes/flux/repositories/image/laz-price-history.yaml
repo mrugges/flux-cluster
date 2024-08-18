@@ -1,0 +1,10 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: laz-price-history
+  namespace: flux-system
+spec:
+  image: docker-registry.storage.svc.cluster.local/laz-price-history
+  interval: 1h
+  provider: generic
