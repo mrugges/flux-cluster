@@ -16,4 +16,7 @@ spec:
             - name: laz-price-history
               image: registry.${SECRET_DOMAIN}/laz-price-history:latest
               imagePullPolicy: Always
+              env:
+                - name: MAX_SCRAPE_ITEMS
+                  value: 25
           restartPolicy: OnFailure
