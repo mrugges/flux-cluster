@@ -11,7 +11,7 @@ spec:
       template:
         spec:
           imagePullSecrets:
-            - name: docker-registry-pull
+            - name: docker-registry-pull-manual
           containers:
             - name: laz-price-history
               image: registry.${SECRET_DOMAIN}/laz-price-history
