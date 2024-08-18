@@ -1,9 +1,0 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: OCIRepository
-metadata:
-  name: laz-price-history
-  namespace: flux-system
-spec:
-  interval: 5m0s
-  url: oci://docker-registry.storage.svc.cluster.local/laz-price-history
