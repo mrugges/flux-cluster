@@ -42,7 +42,7 @@ spec:
         containers:
           cron:
             image:
-              repository: laz-price-history/laz-price-history
+              repository: laz-price-history
             args:
               - ls
             resources:
