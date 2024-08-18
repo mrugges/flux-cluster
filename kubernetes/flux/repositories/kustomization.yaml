@@ -5,3 +5,5 @@ resources:
   - ./git
   - ./helm
   - ./oci
+  - ./image
+  - ./secrets
