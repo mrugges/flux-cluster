@@ -4,8 +4,8 @@ kind: CronJob
 metadata:
   name: laz-price-history
 spec:
-  # schedule: "5 * * * *"
-  schedule: "*/2 * * * *"
+  schedule: "5 * * * *"
+  # schedule: "*/2 * * * *"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
@@ -27,10 +27,10 @@ spec:
                 - name: service-account-credentials-volume
                   mountPath: /etc/gcp
                   readOnly: true
-              image: registry.${SECRET_DOMAIN}/laz-price-history:0.0.0a27
+              image: registry.${SECRET_DOMAIN}/laz-price-history:0.0.0a28
               imagePullPolicy: IfNotPresent
               env:
                 - name: MAX_SCRAPE_ITEMS
-                  value: "25"
+                  value: "5000"
                 - name: GOOGLE_APPLICATION_CREDENTIALS
                   value: /etc/gcp/sa_credentials.json
