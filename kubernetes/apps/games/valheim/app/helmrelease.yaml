@@ -1,5 +1,5 @@
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: valheim
@@ -105,5 +105,3 @@ spec:
         enabled: true
         mountPath: /opt/valheim
         existingClaim: valheim-data
-
-
