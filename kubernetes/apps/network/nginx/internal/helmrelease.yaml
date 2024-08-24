@@ -1,9 +1,10 @@
+# yaml-language-server $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/85d430f3f1c12849dccb4736fe67242d2eaf05e7/helm.toolkit.fluxcd.io/helmrelease_v2.json
 ---
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: nginx-internal
-  namespace: &namespace network
+  namespace: network
 spec:
   interval: 30m
   chart:
@@ -87,3 +88,4 @@ spec:
           memory: 500Mi
     defaultBackend:
       enabled: false
+      port: 8080
