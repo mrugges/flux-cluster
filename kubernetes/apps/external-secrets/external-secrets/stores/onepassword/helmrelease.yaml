@@ -127,8 +127,7 @@ spec:
               - path: /
                 service:
                   name: main
-                  identifier: main
-                  port: 80
+                  port: *apiPort
         tls:
           - hosts:
               - *host
