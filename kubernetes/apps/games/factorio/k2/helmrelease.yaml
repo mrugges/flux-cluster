@@ -68,7 +68,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: external
+        className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
 
@@ -78,6 +78,7 @@ spec:
               - path: /
                 service:
                   name: factorio-k2
+                  port: *port
         tls:
           - hosts:
               - *host
@@ -90,10 +91,12 @@ spec:
     persistence:
       config:
         enabled: true
-        mountPath: /factorio
+        globalMounts:
+          - path: /factorio
+            readonly: false
         existingClaim: factorio-k2-config-v1
       helmconfig:
-        enabled: "true"
+        enabled: true
         type: "secret"
         name: factorio-k2
     startupProbe:
