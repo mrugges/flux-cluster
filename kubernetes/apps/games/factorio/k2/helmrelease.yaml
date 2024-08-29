@@ -50,10 +50,12 @@ spec:
           runAsUser: 0
     service:
       main:
+        controller: main
         type: LoadBalancer
         externalTrafficPolicy: Local
         ports:
           http:
+            port: 80
             enabled: false
             primary: false
           server:
@@ -93,7 +95,7 @@ spec:
         enabled: true
         globalMounts:
           - path: /factorio
-            readonly: false
+            readOnly: false
         existingClaim: factorio-k2-config-v1
       helmconfig:
         enabled: true
