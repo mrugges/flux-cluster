@@ -110,8 +110,6 @@ spec:
                   initialDelaySeconds: 35
               startup:
                 enabled: false
-              securityContext: *securityContext
-              resources: *resources
         pod:
           securityContext:
             runAsUser: 999
@@ -129,7 +127,8 @@ spec:
               - path: /
                 service:
                   name: main
-                  port: http
+                  identifier: main
+                  port: 80
         tls:
           - hosts:
               - *host
@@ -141,6 +140,7 @@ spec:
           - path: *configDir
     service:
       main:
+        controller: main
         ports:
           http:
             port: *apiPort
