@@ -41,7 +41,31 @@ spec:
       ingester:
         chunk_encoding: snappy
       storage:
-        type: filesystem
+        type: s3
+        bucketNames:
+          chunks: "chunks"
+          ruler: "ruler"
+          admin: "admin"
+        s3:
+          # s3 URL can be used to specify the endpoint, access key, secret key, and bucket name
+          # s3: s3://access_key:secret_access_key@custom_endpoint/bucket_name
+          # AWS endpoint URL
+          endpoint: ${NAS_IP}
+          # AWS region where the S3 bucket is located
+          region: us-east-1
+          # AWS secret access key
+          secretAccessKey: "$${MINIO_USER}"
+          # AWS access key ID
+          accessKeyId: "$${MINIO_PASSWORD}"
+          # AWS signature version (e.g., v2 or v4)
+          # signatureVersion: <your-signature-version>
+          # Forces the path style for S3 (true/false)
+          s3ForcePathStyle: false
+          # Allows insecure (HTTP) connections (true/false)
+          insecure: true
+          # HTTP configuration settings
+          http_config: {}
+
       schemaConfig:
         configs:
           - from: "2024-04-01" # quote
