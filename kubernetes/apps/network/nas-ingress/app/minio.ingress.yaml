@@ -44,7 +44,5 @@ metadata:
 spec:
   ports:
     - name: http
-      port: 9001
-    - name: http2
-      port: 9000
+      port: 80
   type: ClusterIP
