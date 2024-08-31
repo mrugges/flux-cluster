@@ -54,9 +54,9 @@ spec:
           # AWS region where the S3 bucket is located
           region: us-east-1
           # AWS secret access key
-          secretAccessKey: "$${MINIO_USER}"
+          secretAccessKey: "${MINIO_USER}"
           # AWS access key ID
-          accessKeyId: "$${MINIO_PASSWORD}"
+          accessKeyId: "${MINIO_PASSWORD}"
           # AWS signature version (e.g., v2 or v4)
           # signatureVersion: <your-signature-version>
           # Forces the path style for S3 (true/false)
