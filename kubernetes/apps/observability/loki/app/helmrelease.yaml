@@ -84,7 +84,7 @@ spec:
         storageClass: openebs-hostpath
         size: 50Gi
     gateway:
-      replicas: 1
+      replicas: 0
     backend:
       replicas: 0
     read:
