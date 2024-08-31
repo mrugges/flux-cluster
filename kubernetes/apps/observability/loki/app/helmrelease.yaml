@@ -54,9 +54,17 @@ spec:
           # AWS region where the S3 bucket is located
           region: us-east-1
           # AWS secret access key
-          secretAccessKey: "${MINIO_USER}"
+          secretAccessKey:
+            valueFrom:
+              secret:
+                name: loki
+                key: MINIO_PASSWORD
           # AWS access key ID
-          accessKeyId: "${MINIO_PASSWORD}"
+          accessKeyId:
+            valueFrom:
+              secret:
+                name: loki
+                key: MINIO_USER
           # AWS signature version (e.g., v2 or v4)
           # signatureVersion: <your-signature-version>
           # Forces the path style for S3 (true/false)
@@ -79,10 +87,10 @@ spec:
         retention_period: 14d
     singleBinary:
       replicas: 1
-      # persistence:
-      #   enabled: true
-      #   storageClass: openebs-hostpath
-      #   size: 50Gi
+      persistence:
+        enabled: true
+        storageClass: openebs-hostpath
+        size: 50Gi
     gateway:
       replicas: 0
     backend:
