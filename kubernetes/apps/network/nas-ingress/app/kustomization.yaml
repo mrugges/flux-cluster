@@ -13,5 +13,6 @@ resources:
   - ./audiobookshelf-ingress.yaml
   - ./duplicati-ingress.yaml
   - ./minio.ingress.yaml
+  - ./minio-api.ingress.yaml
   - ./sync-ingress.yaml
   - ./photoprism-ingress.yaml
