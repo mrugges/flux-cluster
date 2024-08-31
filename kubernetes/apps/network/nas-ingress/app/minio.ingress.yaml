@@ -31,10 +31,10 @@ subsets:
       - ip: ${NAS_IP}
     ports:
       - name: http
-        port: 32769
+        port: 32768
         protocol: TCP
       - name: http2
-        port: 32768
+        port: 32769
         protocol: TCP
 ---
 apiVersion: v1
@@ -44,5 +44,7 @@ metadata:
 spec:
   ports:
     - name: http
-      port: 80
+      port: 9001
+    - name: http2
+      port: 9000
   type: ClusterIP
