@@ -29,7 +29,7 @@ spec:
     - name: openebs
       namespace: openebs-system
   values:
-    deploymentMode: SingleBinary
+    deploymentMode: SimpleScalable
     loki:
       auth_enabled: false
       analytics:
@@ -46,11 +46,11 @@ spec:
           chunks: "chunks"
           ruler: "ruler"
           admin: "admin"
-        s3:
+        minio:
           # s3 URL can be used to specify the endpoint, access key, secret key, and bucket name
           # s3: s3://access_key:secret_access_key@custom_endpoint/bucket_name
           # AWS endpoint URL
-          endpoint: "http://${NAS_IP}:32769/"
+          endpoint: "http://minio-api.${SECRET_DOMAIN}"
           # AWS region where the S3 bucket is located
           region: us-east-1
           # AWS secret access key
@@ -86,19 +86,19 @@ spec:
       limits_config:
         retention_period: 14d
     singleBinary:
-      replicas: 1
-      persistence:
-        enabled: true
-        storageClass: openebs-hostpath
-        size: 50Gi
+      replicas: 0
+      # persistence:
+      #   enabled: true
+      #   storageClass: openebs-hostpath
+      #   size: 50Gi
     gateway:
       replicas: 0
     backend:
-      replicas: 0
+      replicas: 1
     read:
-      replicas: 0
+      replicas: 1
     write:
-      replicas: 0
+      replicas: 1
     chunksCache:
       enabled: false
     resultsCache:
