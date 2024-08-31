@@ -50,7 +50,7 @@ spec:
           # s3 URL can be used to specify the endpoint, access key, secret key, and bucket name
           # s3: s3://access_key:secret_access_key@custom_endpoint/bucket_name
           # AWS endpoint URL
-          endpoint: ${NAS_IP}
+          endpoint: "http://${NAS_IP}:32769/"
           # AWS region where the S3 bucket is located
           region: us-east-1
           # AWS secret access key
