@@ -64,20 +64,20 @@ spec:
           admin: "loki-admin"
         s3:
           # s3 URL can be used to specify the endpoint, access key, secret key, and bucket name
-          # s3: s3://access_key:secret_access_key@custom_endpoint/bucket_name
+          #s3: s3://access_key:secret_access_key@custom_endpoint/bucket_name
           # AWS endpoint URL
-          endpoint: "s3://minio-api.network.svc.cluster.local"
+          endpoint: "http://minio-api.network.svc.cluster.local"
           # AWS region where the S3 bucket is located
-          region: us-east-1
+          # region: us-east-1
           # AWS secret access key
           # AWS signature version (e.g., v2 or v4)
           # signatureVersion: <your-signature-version>
           # Forces the path style for S3 (true/false)
-          s3ForcePathStyle: true
+          # s3ForcePathStyle: true
           # Allows insecure (HTTP) connections (true/false)
           insecure: true
           # HTTP configuration settings
-          http_config: {}
+          # http_config: {}
 
       schemaConfig:
         configs:
