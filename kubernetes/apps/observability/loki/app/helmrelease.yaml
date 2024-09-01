@@ -31,8 +31,6 @@ spec:
   values:
     deploymentMode: SimpleScalable
     loki:
-      tracing:
-        enabled: true
       ingress:
         enabled: true
         ingressClassName: internal
@@ -115,9 +113,9 @@ spec:
   valuesFrom:
     - kind: Secret
       name: loki
-      valuesKey: MINIO_LOKI_USER
+      valuesKey: MINIO_LOKI_ACCESS_KEY
       targetPath: loki.storage.s3.accessKeyId
     - kind: Secret
       name: loki
-      valuesKey: MINIO_LOKI_PASSWORD
+      valuesKey: MINIO_LOKI_SECRET_KEY
       targetPath: loki.storage.s3.secretAccessKey
