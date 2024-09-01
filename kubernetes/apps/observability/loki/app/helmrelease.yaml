@@ -43,10 +43,10 @@ spec:
       storage:
         type: s3
         bucketNames:
-          chunks: "chunks"
-          ruler: "ruler"
-          admin: "admin"
-        minio:
+          chunks: "loki-chunks"
+          ruler: "loki-ruler"
+          admin: "loki-admin"
+        s3:
           # s3 URL can be used to specify the endpoint, access key, secret key, and bucket name
           # s3: s3://access_key:secret_access_key@custom_endpoint/bucket_name
           # AWS endpoint URL
@@ -54,17 +54,6 @@ spec:
           # AWS region where the S3 bucket is located
           region: us-east-1
           # AWS secret access key
-          secretAccessKey:
-            valueFrom:
-              secret:
-                name: loki
-                key: MINIO_PASSWORD
-          # AWS access key ID
-          accessKeyId:
-            valueFrom:
-              secret:
-                name: loki
-                key: MINIO_USER
           # AWS signature version (e.g., v2 or v4)
           # signatureVersion: <your-signature-version>
           # Forces the path style for S3 (true/false)
@@ -107,3 +96,13 @@ spec:
       enabled: false
     test:
       enabled: false
+
+  valuesFrom:
+    - kind: Secret
+      name: loki
+      valuesKey: MINIO_LOKI_USER
+      targetPath: loki.storage.s3.accessKeyId
+    - kind: Secret
+      name: loki
+      valuesKey: MINIO_LOKI_PASSWORD
+      targetPath: loki.storage.s3.secretAccessKey
