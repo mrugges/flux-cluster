@@ -55,6 +55,27 @@ spec:
         replication_factor: 1
       ingester:
         chunk_encoding: snappy
+        replicas: 3
+        extraEnv:
+          - name: JAEGER_ENDPOINT
+            value: "http://mmc-alloy-external.default.svc.cluster.local:14268/api/traces"
+            # This sets the Jaeger endpoint where traces will be sent.
+            # The endpoint points to the mmc-alloy service in the default namespace at port 14268.
+
+          - name: JAEGER_AGENT_TAGS
+            value: 'cluster="prod",namespace="default"'
+            # This specifies additional tags to attach to each span.
+            # Here, the cluster is labeled as "prod" and the namespace as "default".
+
+          - name: JAEGER_SAMPLER_TYPE
+            value: "ratelimiting"
+            # This sets the sampling strategy for traces.
+            # "ratelimiting" means that traces will be sampled at a fixed rate.
+
+          - name: JAEGER_SAMPLER_PARAM
+            value: "1.0"
+            # This sets the parameter for the sampler.
+            # For ratelimiting, "1.0" typically means one trace per second.
       storage:
         type: s3
         bucketNames:

@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mmc-alloy-external
+  namespace: default
+spec:
+  type: ExternalName
+  externalName: meta-alloy.meta.svc.cluster.local
