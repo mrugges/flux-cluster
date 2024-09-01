@@ -29,23 +29,8 @@ spec:
     - name: openebs
       namespace: openebs-system
   values:
-    deploymentMode: SimpleScalable
+    deploymentMode: SingleBinary
     loki:
-      tracing:
-        enabled: true
-      ingress:
-        enabled: true
-        ingressClassName: internal
-        hosts:
-          - host: &host loki-gateway.${SECRET_DOMAIN}
-            http:
-              paths:
-                - pathType: Prefix
-                  path: "/"
-        tls:
-          - hosts:
-              - *host
-
       auth_enabled: false
       analytics:
         reporting_enabled: false
@@ -55,30 +40,8 @@ spec:
         replication_factor: 1
       ingester:
         chunk_encoding: snappy
-
       storage:
-        type: s3
-        bucketNames:
-          chunks: "loki-chunks"
-          ruler: "loki-ruler"
-          admin: "loki-admin"
-        s3:
-          # s3 URL can be used to specify the endpoint, access key, secret key, and bucket name
-          #s3: s3://access_key:secret_access_key@custom_endpoint/bucket_name
-          # AWS endpoint URL
-          endpoint: "http://10.10.96.10:32769"
-          # AWS region where the S3 bucket is located
-          # region: us-east-1
-          # AWS secret access key
-          # AWS signature version (e.g., v2 or v4)
-          # signatureVersion: <your-signature-version>
-          # Forces the path style for S3 (true/false)
-          # s3ForcePathStyle: true
-          # Allows insecure (HTTP) connections (true/false)
-          insecure: true
-          # HTTP configuration settings
-          # http_config: {}
-
+        type: filesystem
       schemaConfig:
         configs:
           - from: "2024-04-01" # quote
@@ -91,99 +54,39 @@ spec:
       limits_config:
         retention_period: 14d
     singleBinary:
-      replicas: 0
-      # persistence:
-      #   enabled: true
-      #   storageClass: openebs-hostpath
-      #   size: 50Gi
+      replicas: 1
+      persistence:
+        enabled: true
+        storageClass: openebs-hostpath
+        size: 50Gi
+      extraEnv:
+        - name: JAEGER_ENDPOINT
+          value: "http://mmc-alloy-external.default.svc.cluster.local:14268/api/traces"
+          # This sets the Jaeger endpoint where traces will be sent.
+          # The endpoint points to the mmc-alloy service in the default namespace at port 14268.
+
+        - name: JAEGER_AGENT_TAGS
+          value: 'cluster="prod",namespace="default"'
+          # This specifies additional tags to attach to each span.
+          # Here, the cluster is labeled as "prod" and the namespace as "default".
+
+        - name: JAEGER_SAMPLER_TYPE
+          value: "ratelimiting"
+          # This sets the sampling strategy for traces.
+          # "ratelimiting" means that traces will be sampled at a fixed rate.
+
+        - name: JAEGER_SAMPLER_PARAM
+          value: "1.0"
+          # This sets the parameter for the sampler.
+          # For ratelimiting, "1.0" typically means one trace per second.
     gateway:
-      replicas: 1
-      extraEnv:
-        - name: JAEGER_ENDPOINT
-          value: "http://mmc-alloy-external.default.svc.cluster.local:14268/api/traces"
-          # This sets the Jaeger endpoint where traces will be sent.
-          # The endpoint points to the mmc-alloy service in the default namespace at port 14268.
-
-        - name: JAEGER_AGENT_TAGS
-          value: 'cluster="prod",namespace="default"'
-          # This specifies additional tags to attach to each span.
-          # Here, the cluster is labeled as "prod" and the namespace as "default".
-
-        - name: JAEGER_SAMPLER_TYPE
-          value: "ratelimiting"
-          # This sets the sampling strategy for traces.
-          # "ratelimiting" means that traces will be sampled at a fixed rate.
-
-        - name: JAEGER_SAMPLER_PARAM
-          value: "1.0"
-          # This sets the parameter for the sampler.
-          # For ratelimiting, "1.0" typically means one trace per second.
+      replicas: 0
     backend:
-      replicas: 1
-      extraEnv:
-        - name: JAEGER_ENDPOINT
-          value: "http://mmc-alloy-external.default.svc.cluster.local:14268/api/traces"
-          # This sets the Jaeger endpoint where traces will be sent.
-          # The endpoint points to the mmc-alloy service in the default namespace at port 14268.
-
-        - name: JAEGER_AGENT_TAGS
-          value: 'cluster="prod",namespace="default"'
-          # This specifies additional tags to attach to each span.
-          # Here, the cluster is labeled as "prod" and the namespace as "default".
-
-        - name: JAEGER_SAMPLER_TYPE
-          value: "ratelimiting"
-          # This sets the sampling strategy for traces.
-          # "ratelimiting" means that traces will be sampled at a fixed rate.
-
-        - name: JAEGER_SAMPLER_PARAM
-          value: "1.0"
-          # This sets the parameter for the sampler.
-          # For ratelimiting, "1.0" typically means one trace per second.
+      replicas: 0
     read:
-      replicas: 1
-      extraEnv:
-        - name: JAEGER_ENDPOINT
-          value: "http://mmc-alloy-external.default.svc.cluster.local:14268/api/traces"
-          # This sets the Jaeger endpoint where traces will be sent.
-          # The endpoint points to the mmc-alloy service in the default namespace at port 14268.
-
-        - name: JAEGER_AGENT_TAGS
-          value: 'cluster="prod",namespace="default"'
-          # This specifies additional tags to attach to each span.
-          # Here, the cluster is labeled as "prod" and the namespace as "default".
-
-        - name: JAEGER_SAMPLER_TYPE
-          value: "ratelimiting"
-          # This sets the sampling strategy for traces.
-          # "ratelimiting" means that traces will be sampled at a fixed rate.
-
-        - name: JAEGER_SAMPLER_PARAM
-          value: "1.0"
-          # This sets the parameter for the sampler.
-          # For ratelimiting, "1.0" typically means one trace per second.
+      replicas: 0
     write:
-      replicas: 1
-      extraEnv:
-        - name: JAEGER_ENDPOINT
-          value: "http://mmc-alloy-external.default.svc.cluster.local:14268/api/traces"
-          # This sets the Jaeger endpoint where traces will be sent.
-          # The endpoint points to the mmc-alloy service in the default namespace at port 14268.
-
-        - name: JAEGER_AGENT_TAGS
-          value: 'cluster="prod",namespace="default"'
-          # This specifies additional tags to attach to each span.
-          # Here, the cluster is labeled as "prod" and the namespace as "default".
-
-        - name: JAEGER_SAMPLER_TYPE
-          value: "ratelimiting"
-          # This sets the sampling strategy for traces.
-          # "ratelimiting" means that traces will be sampled at a fixed rate.
-
-        - name: JAEGER_SAMPLER_PARAM
-          value: "1.0"
-          # This sets the parameter for the sampler.
-          # For ratelimiting, "1.0" typically means one trace per second.
+      replicas: 0
     chunksCache:
       enabled: false
     resultsCache:
@@ -192,13 +95,3 @@ spec:
       enabled: false
     test:
       enabled: false
-
-  valuesFrom:
-    - kind: Secret
-      name: loki
-      valuesKey: MINIO_LOKI_ACCESS_KEY
-      targetPath: loki.storage.s3.accessKeyId
-    - kind: Secret
-      name: loki
-      valuesKey: MINIO_LOKI_SECRET_KEY
-      targetPath: loki.storage.s3.secretAccessKey
