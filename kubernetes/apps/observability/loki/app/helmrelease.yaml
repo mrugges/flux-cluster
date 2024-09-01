@@ -31,6 +31,19 @@ spec:
   values:
     deploymentMode: SimpleScalable
     loki:
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        hosts:
+          - host: &host loki.${SECRET_DOMAIN}
+            http:
+              paths:
+                - pathType: Prefix
+                  path: "/"
+        tls:
+          - hosts:
+              - *host
+
       auth_enabled: false
       analytics:
         reporting_enabled: false
