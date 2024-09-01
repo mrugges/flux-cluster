@@ -57,7 +57,7 @@ spec:
           # AWS signature version (e.g., v2 or v4)
           # signatureVersion: <your-signature-version>
           # Forces the path style for S3 (true/false)
-          s3ForcePathStyle: false
+          s3ForcePathStyle: true
           # Allows insecure (HTTP) connections (true/false)
           insecure: true
           # HTTP configuration settings
