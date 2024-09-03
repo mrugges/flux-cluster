@@ -183,6 +183,7 @@ spec:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          io.cilium/lb-ipam-ips: 10.10.96.25
         hosts:
           - host: mc.${SECRET_DOMAIN}
             paths:
@@ -196,4 +197,3 @@ spec:
     persistence:
       data:
         existingClaim: ${VOLSYNC_CLAIM}
-
