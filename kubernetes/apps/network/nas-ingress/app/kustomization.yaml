@@ -16,3 +16,4 @@ resources:
   - ./minio-api.ingress.yaml
   - ./sync-ingress.yaml
   - ./photoprism-ingress.yaml
+  - ./archivist-ingress.yaml
