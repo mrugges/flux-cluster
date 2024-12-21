@@ -8,7 +8,7 @@ metadata:
 spec:
   dependsOn:
     - name: cloudnative-pg-cluster
-    - name: dragonfly
+    - name: dragonfly-cluster
   path: ./kubernetes/apps/default/tubearchivist/app
   prune: true
   sourceRef:

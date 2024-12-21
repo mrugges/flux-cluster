@@ -18,6 +18,9 @@ spec:
     - --proactor_threads=2
     - --cluster_mode=emulated
     - --lock_on_hashtags
+  serviceSpec:
+    annotations:
+      io.cilium/lb-ipam-ips: "10.10.96.27"
   resources:
     requests:
       cpu: 100m
