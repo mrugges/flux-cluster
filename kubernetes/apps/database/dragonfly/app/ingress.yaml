@@ -1,0 +1,23 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dragonfly
+  annotations:
+    hajimari.io/icon: arcticons:dragonfly
+spec:
+  ingressClassName: internal
+  rules:
+    - host: &host dragonfly.${SECRET_DOMAIN}
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: dragonfly
+                port:
+                  number: 6379
+  tls:
+    - hosts:
+        - *host
