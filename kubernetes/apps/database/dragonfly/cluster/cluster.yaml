@@ -21,6 +21,7 @@ spec:
   serviceSpec:
     annotations:
       io.cilium/lb-ipam-ips: "10.10.96.27"
+    type: LoadBalancer
   resources:
     requests:
       cpu: 100m
