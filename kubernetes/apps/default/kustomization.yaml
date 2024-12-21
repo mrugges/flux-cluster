@@ -9,3 +9,4 @@ resources:
   - ./smtp-relay/ks.yaml
   - ./glauth/ks.yaml
   - ./secret-generator/ks.yaml
+  - ./tubearchivist/ks.yaml
