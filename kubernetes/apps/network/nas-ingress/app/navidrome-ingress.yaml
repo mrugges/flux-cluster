@@ -1,0 +1,45 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: navidrome
+  annotations:
+    hajimari.io/icon: arcticons:navidrome
+spec:
+  ingressClassName: external
+  rules:
+    - host: &host navidrome.${SECRET_DOMAIN}
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: navidrome
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - *host
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: navidrome
+subsets:
+  - addresses:
+      - ip: ${NAS_IP}
+    ports:
+      - name: http
+        port: 4533
+        protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: navidrome
+spec:
+  ports:
+    - name: http
+      port: 80
+  type: ClusterIP
