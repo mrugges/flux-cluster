@@ -5,6 +5,7 @@ metadata:
   name: navidrome
   annotations:
     hajimari.io/icon: arcticons:navidrome
+    external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
 spec:
   ingressClassName: external
   rules:
