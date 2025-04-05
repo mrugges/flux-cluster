@@ -63,7 +63,7 @@ spec:
     image:
       pullPolicy: IfNotPresent
       repository: registry
-      tag: 2.8.3
+      tag: 3.0.0
     ingress:
       annotations:
         external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
