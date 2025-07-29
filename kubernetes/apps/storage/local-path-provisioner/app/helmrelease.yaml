@@ -63,6 +63,15 @@ spec:
           dirPermissionsUser: 0
           dirPermissionsGroup: 0
     node:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: NotIn
+                    values:
+                      - forests
       driver:
         image: ghcr.io/democratic-csi/democratic-csi:v1.9.3
         extraVolumeMounts:
