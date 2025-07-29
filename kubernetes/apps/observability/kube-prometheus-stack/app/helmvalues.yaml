@@ -111,6 +111,10 @@ data:
               resources:
                 requests:
                   storage: 10Gi
+    prometheus-node-exporter:
+      hostRootFsMount:
+        enabled: false
+        mountPropagation: None
     grafana:
       enabled: false
       forceDeployDashboards: true
