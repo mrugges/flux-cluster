@@ -111,8 +111,7 @@ data:
               resources:
                 requests:
                   storage: 10Gi
-    nodeExporter:
-      enabled: true
+    prometheus-node-exporter:
       hostRootFsMount:
         enabled: false
         mountPropagation: None
