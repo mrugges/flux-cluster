@@ -83,6 +83,16 @@ data:
         enabled: true
         annotations:
           grafana_folder: Cilium
+      # Ensure operator doesn't run on WSL node
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: NotIn
+                values:
+                - forests
     prometheus:
       enabled: true
       serviceMonitor:
@@ -96,3 +106,24 @@ data:
     securityContext:
       privileged: true
     routingMode: native
+    # Exclude WSL node from Cilium
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: NotIn
+              values:
+              - forests
+    # Exclude WSL node from Cilium Envoy
+    envoy:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: NotIn
+                values:
+                - forests
