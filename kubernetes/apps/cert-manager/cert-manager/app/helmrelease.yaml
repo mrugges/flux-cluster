@@ -24,8 +24,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    networkPolicy:
-      enabled: true
     installCRDs: true
     extraArgs:
       - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
@@ -40,3 +38,6 @@ spec:
       servicemonitor:
         enabled: true
         prometheusInstance: observability
+    webhook:
+      networkPolicy:
+        enabled: true
