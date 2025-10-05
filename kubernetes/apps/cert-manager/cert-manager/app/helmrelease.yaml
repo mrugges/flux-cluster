@@ -41,3 +41,22 @@ spec:
     webhook:
       networkPolicy:
         enabled: true
+        ingress:
+          - from:
+              - ipBlock:
+                  cidr: 0.0.0.0/0
+        egress:
+          - ports:
+              - port: 80
+                protocol: TCP
+              - port: 443
+                protocol: TCP
+              - port: 53
+                protocol: TCP
+              - port: 53
+                protocol: UDP
+              - port: 6443
+                protocol: TCP
+            to:
+              - ipBlock:
+                  cidr: 0.0.0.0/0
