@@ -39,8 +39,8 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://cloudnative-pg/
-      endpointURL: "https://${NAS_IP}:32771/"
-      # Note: serverName version needs to be inclemented
+      endpointURL: "https://${NAS_IP}:32768/"
+      # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
       serverName: &currentCluster postgres16-v2
       s3Credentials:
