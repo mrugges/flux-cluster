@@ -4,6 +4,7 @@ kind: CronJob
 metadata:
   name: laz-price-history
 spec:
+  suspend: true
   schedule: "5 * * * *"
   # schedule: "*/2 * * * *"
   concurrencyPolicy: Forbid
