@@ -4,15 +4,15 @@ The `forests` node runs on WSL2 and has special networking requirements.
 
 ## CNI Configuration
 
-Cilium does not fully support WSL2 due to kernel limitations. The forests node uses Flannel CNI instead:
+Cilium does not fully support WSL2 due to kernel limitations. The forests node uses Bridge CNI instead:
 
 - **k3s-one node**: Uses Cilium CNI (managed by Flux)
-- **forests node**: Uses Flannel CNI (manually configured on the node)
+- **forests node**: Uses Bridge CNI (manually configured on the node)
 
 ## Setup Steps
 
 ### 1. CNI Configuration (Already Done)
-The forests node has Flannel CNI configured at `/etc/cni/net.d/10-flannel.conflist`
+The forests node has Bridge CNI configured at `/etc/cni/net.d/10-bridge.conflist`
 
 ### 2. Remove Cilium Taint (Manual Step Required)
 After the node starts, remove the Cilium taint to allow pods to schedule:
@@ -35,8 +35,15 @@ kubectl get pods --all-namespaces --field-selector spec.nodeName=forests
 - Cilium requires eBPF features that are limited in WSL2
 - See: https://github.com/cilium/cilium/issues/21542
 - The forests node affinity rules in `helmvalues.yaml` prevent Cilium from scheduling there
-- Flannel works reliably on WSL2 without kernel modifications
+- Bridge CNI works reliably on WSL2 without kernel modifications
+
+## Excluded Services
+
+The following services are excluded from running on the forests node:
+
+- **node-feature-discovery**: Has issues with limited hardware access in WSL2 (crashes)
+- **Cilium**: Not compatible with WSL2 kernel limitations
 
 ## Maintenance
 
-The Flannel CNI configuration must persist across node restarts. It's stored in `/etc/cni/net.d/` within the WSL2 instance.
+The Bridge CNI configuration must persist across node restarts. It's stored in `/etc/cni/net.d/` within the WSL2 instance.

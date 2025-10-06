@@ -29,5 +29,8 @@ spec:
       config:
         core:
           sources: ["pci", "system", "usb"]
+      # Exclude WSL2 node - NFD has issues with limited hardware access in WSL2
+      nodeSelector:
+        kubernetes.io/hostname: k3s-one
     prometheus:
       enable: true
