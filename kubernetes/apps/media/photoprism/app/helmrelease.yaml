@@ -105,13 +105,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile:
           type: RuntimeDefault
-      # Enable GPU access for transcoding
       hostIPC: false
-      volumes:
-        - name: dri
-          hostPath:
-            path: /dev/dri
-            type: Directory
     service:
       app:
         controller: photoprism
@@ -162,12 +156,11 @@ spec:
           - path: /photoprism/import
       storage:
         type: persistentVolumeClaim
-        existingClaim: photoprism-storage
-        globalMounts:
-          - path: /photoprism/storage
         accessMode: ReadWriteOnce
         size: 100Gi
         storageClass: local-hostpath
+        globalMounts:
+          - path: /photoprism/storage
       cache:
         type: emptyDir
         globalMounts:
