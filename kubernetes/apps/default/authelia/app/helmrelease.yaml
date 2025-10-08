@@ -77,6 +77,8 @@ spec:
               limits:
                 memory: 128Mi
     defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/hostname: k3s-one
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534
