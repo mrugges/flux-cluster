@@ -1,0 +1,179 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app photoprism
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: mariadb
+      namespace: database
+  values:
+    controllers:
+      photoprism:
+        replicas: 1
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: photoprism/photoprism
+              tag: latest
+            env:
+              TZ: America/New_York
+              PHOTOPRISM_STORAGE_PATH: /photoprism/storage
+              PHOTOPRISM_ORIGINALS_PATH: /photoprism/originals
+              PHOTOPRISM_IMPORT_PATH: /photoprism/import
+              PHOTOPRISM_PUBLIC: "false"
+              PHOTOPRISM_SITE_URL: "https://photos.${SECRET_DOMAIN}"
+              PHOTOPRISM_SITE_TITLE: PhotoPrism
+              PHOTOPRISM_SITE_CAPTION: Browse Your Life
+              PHOTOPRISM_HTTP_PORT: "2342"
+              # GPU transcoding (Intel Quick Sync)
+              PHOTOPRISM_FFMPEG_ENCODER: intel
+              PHOTOPRISM_FFMPEG_SIZE: "3840"
+              PHOTOPRISM_FFMPEG_BITRATE: "50"
+              # Performance tuning
+              PHOTOPRISM_WORKERS: "4"
+              PHOTOPRISM_READONLY: "false"
+              PHOTOPRISM_DISABLE_CHOWN: "false"
+              PHOTOPRISM_DISABLE_BACKUPS: "false"
+              # Features
+              PHOTOPRISM_DISABLE_WEBDAV: "false"
+              PHOTOPRISM_DISABLE_SETTINGS: "false"
+              PHOTOPRISM_DISABLE_PLACES: "false"
+              PHOTOPRISM_DISABLE_EXIFTOOL: "false"
+              PHOTOPRISM_DISABLE_TENSORFLOW: "false"
+              PHOTOPRISM_DETECT_NSFW: "false"
+              PHOTOPRISM_UPLOAD_NSFW: "true"
+              # Logging
+              PHOTOPRISM_LOG_LEVEL: info
+              PHOTOPRISM_DEBUG: "false"
+            envFrom:
+              - secretRef:
+                  name: photoprism-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v1/status
+                    port: &port 2342
+                  initialDelaySeconds: 30
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities:
+                drop: ["ALL"]
+            resources:
+              requests:
+                cpu: 100m
+                memory: 2Gi
+              limits:
+                memory: 8Gi
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/hostname: forests
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+      # Enable GPU access for transcoding
+      hostIPC: false
+      volumes:
+        - name: dri
+          hostPath:
+            path: /dev/dri
+            type: Directory
+    service:
+      app:
+        controller: photoprism
+        ports:
+          http:
+            port: *port
+    serviceMonitor:
+      app:
+        serviceName: photoprism
+        enabled: true
+        endpoints:
+          - port: http
+            scheme: http
+            path: /api/v1/metrics
+            interval: 1m
+            scrapeTimeout: 10s
+    ingress:
+      app:
+        className: internal
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/appName: "Photos"
+          hajimari.io/icon: "image-multiple"
+          nginx.ingress.kubernetes.io/proxy-body-size: 4G
+          nginx.ingress.kubernetes.io/proxy-buffering: "off"
+          nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+        hosts:
+          - host: &host photos.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      originals:
+        type: persistentVolumeClaim
+        existingClaim: photoprism-originals-nfs
+        globalMounts:
+          - path: /photoprism/originals
+            readOnly: true
+      import:
+        type: persistentVolumeClaim
+        existingClaim: photoprism-import-nfs
+        globalMounts:
+          - path: /photoprism/import
+      storage:
+        type: persistentVolumeClaim
+        existingClaim: photoprism-storage
+        globalMounts:
+          - path: /photoprism/storage
+        accessMode: ReadWriteOnce
+        size: 100Gi
+        storageClass: local-hostpath
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /photoprism/storage/cache
+      dri:
+        type: hostPath
+        hostPath: /dev/dri
+        globalMounts:
+          - path: /dev/dri

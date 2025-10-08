@@ -1,0 +1,50 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app mariadb
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: mariadb
+      version: 20.x
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    auth:
+      usePasswordFiles: false
+      existingSecret: mariadb-secret
+      username: mariadb
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    primary:
+      resourcesPreset: none
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          memory: 1Gi
+      persistence:
+        enabled: true
+        size: 10Gi
+        storageClass: local-hostpath
+    initdbScripts:
+      create-photoprism.sql: |
+        CREATE DATABASE IF NOT EXISTS photoprism;
+        CREATE USER IF NOT EXISTS 'photoprism'@'%' IDENTIFIED BY '${PHOTOPRISM_MARIADB_PASSWORD}';
+        GRANT ALL PRIVILEGES ON photoprism.* to 'photoprism'@'%';

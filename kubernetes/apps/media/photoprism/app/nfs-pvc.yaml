@@ -1,0 +1,75 @@
+---
+# PV for photos (read-only from NAS)
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: photoprism-originals-nfs
+spec:
+  storageClassName: nfs-csi
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ${NAS_IP}
+    path: /volume1/Photos
+  mountOptions:
+    - nfsvers=4
+    - tcp
+    - intr
+    - hard
+    - noatime
+    - nodiratime
+    - ro
+---
+# PVC for photos
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: photoprism-originals-nfs
+  namespace: media
+spec:
+  accessModes:
+    - ReadOnlyMany
+  storageClassName: nfs-csi
+  resources:
+    requests:
+      storage: 1Mi
+---
+# PV for imports (read-write from NAS)
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: photoprism-import-nfs
+spec:
+  storageClassName: nfs-csi
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ${NAS_IP}
+    path: /volume1/Photos/Import
+  mountOptions:
+    - nfsvers=4
+    - tcp
+    - intr
+    - hard
+    - noatime
+    - nodiratime
+---
+# PVC for imports
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: photoprism-import-nfs
+  namespace: media
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: nfs-csi
+  resources:
+    requests:
+      storage: 1Mi
