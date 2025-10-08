@@ -24,7 +24,9 @@ spec:
       retries: 3
   values:
     image:
-      tag: 11.5.2-debian-12-r1
+      registry: docker.io
+      repository: library/mariadb
+      tag: "11.5"
     auth:
       usePasswordFiles: false
       existingSecret: mariadb-secret
