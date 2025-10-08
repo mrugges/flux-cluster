@@ -23,10 +23,6 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    image:
-      registry: docker.io
-      repository: library/mariadb
-      tag: "11.5"
     auth:
       usePasswordFiles: false
       existingSecret: mariadb-secret
