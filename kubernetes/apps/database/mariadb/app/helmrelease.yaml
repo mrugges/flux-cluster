@@ -23,6 +23,17 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    global:
+      compatibility:
+        openshift:
+          adaptSecurityContext: disabled
+      # Allow official MariaDB image (Bitnami's flag name is misleading - official image is secure)
+      security:
+        allowInsecureImages: true
+    image:
+      registry: docker.io
+      repository: mariadb
+      tag: "11.6.2"
     auth:
       usePasswordFiles: false
       existingSecret: mariadb-secret
