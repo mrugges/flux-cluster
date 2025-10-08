@@ -15,8 +15,9 @@ spec:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    force: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     auth:
