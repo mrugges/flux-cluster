@@ -157,7 +157,7 @@ spec:
       storage:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
-        size: 50Gi
+        size: 30Gi
         storageClass: local-hostpath
         globalMounts:
           - path: /photoprism/storage
