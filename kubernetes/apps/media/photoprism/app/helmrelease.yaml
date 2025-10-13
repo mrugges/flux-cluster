@@ -18,9 +18,9 @@ spec:
     remediation:
       retries: 3
   upgrade:
-    cleanupOnFail: true
+    cleanupOnFail: false
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   dependsOn:
     - name: mariadb
@@ -156,9 +156,7 @@ spec:
           - path: /photoprism/import
       storage:
         type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 10Gi
-        storageClass: local-hostpath
+        existingClaim: photoprism-storage
         globalMounts:
           - path: /photoprism/storage
       cache:
