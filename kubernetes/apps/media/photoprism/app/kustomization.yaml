@@ -5,4 +5,5 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./nfs-pvc.yaml
+  - ./storage-pv.yaml
   - ./storage-pvc.yaml
