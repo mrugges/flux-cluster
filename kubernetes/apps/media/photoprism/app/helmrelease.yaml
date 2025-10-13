@@ -158,7 +158,7 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 30Gi
-        storageClass: openebs-hostpath
+        storageClass: local-hostpath
         globalMounts:
           - path: /photoprism/storage
       cache:
