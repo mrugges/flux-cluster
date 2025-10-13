@@ -155,8 +155,9 @@ spec:
         globalMounts:
           - path: /photoprism/import
       storage:
-        type: persistentVolumeClaim
-        existingClaim: photoprism-storage
+        type: hostPath
+        hostPath: /var/lib/rancher/k3s/storage/photoprism-storage
+        hostPathType: DirectoryOrCreate
         globalMounts:
           - path: /photoprism/storage
       cache:
