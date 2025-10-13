@@ -37,6 +37,8 @@ spec:
             image:
               repository: photoprism/photoprism
               tag: latest
+            command: ["/opt/photoprism/bin/photoprism"]
+            args: ["start"]
             env:
               TZ: America/New_York
               PHOTOPRISM_STORAGE_PATH: /photoprism/storage
@@ -84,10 +86,9 @@ spec:
                   failureThreshold: 3
               readiness: *probes
             securityContext:
-              allowPrivilegeEscalation: true
+              allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
               capabilities:
-                add: ["CHOWN", "SETUID", "SETGID"]
                 drop: ["ALL"]
             resources:
               requests:
