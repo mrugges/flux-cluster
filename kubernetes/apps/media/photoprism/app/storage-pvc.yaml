@@ -1,0 +1,14 @@
+---
+# PVC for photoprism storage (local hostpath)
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: photoprism-storage
+  namespace: media
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: openebs-hostpath
+  resources:
+    requests:
+      storage: 30Gi
