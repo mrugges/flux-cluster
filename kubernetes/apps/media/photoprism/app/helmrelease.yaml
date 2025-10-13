@@ -92,9 +92,9 @@ spec:
             resources:
               requests:
                 cpu: 100m
-                memory: 2Gi
+                memory: 500Mi
               limits:
-                memory: 8Gi
+                memory: 3Gi
     defaultPodOptions:
       nodeSelector:
         kubernetes.io/hostname: forests
