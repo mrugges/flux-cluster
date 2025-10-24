@@ -50,7 +50,7 @@ spec:
           main:
             image:
               repository: elasticsearch
-              tag: 8.13.3
+              tag: 8.19.6
             env:
               TZ: ${TIMEZONE}
               xpack.security.enabled: "false"
